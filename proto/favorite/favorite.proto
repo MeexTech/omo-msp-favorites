@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package omo.msp.Favorite;
+option go_package= "proto/favorite";
+
+service FavoriteService {
+    rpc AddOne(ReqFavoriteAdd) returns (ReplyFavoriteOne) {}
+    rpc GetOne(RequestInfo) returns (ReplyFavoriteOne) {}
+    rpc GetListByScene(RequestInfo) returns (ReplyFavoriteOne) {}
+    rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyInfo) {}
+    rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+    rpc AppendEntity(ReqFavoriteEntity) returns (ReplyFavoriteEntities) {}
+    rpc SubtractEntity(RequestInfo) returns (ReplyFavoriteEntities) {}
+}
+
+enum ResultStatus {
+    Success = 0;
+    MaxLimit = 1;
+    Repeated = 2;
+    NotExisted = 3;
+    DBException = 4;
+    Empty = 5;
+}
+
+message FavoriteInfo {
+    string uid = 1;
+    uint64 id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string name = 5;
+    string scene = 6;
+    string remark = 7;
+    repeated EntityInfo entities = 8;
+}
+
+message EntityInfo {
+    string uid = 1;
+    string name = 2;
+}
+
+message RequestInfo {
+    string uid = 1;
+    string entity = 2;
+}
+
+message ReplyInfo {
+    string uid = 1;
+    ResultStatus errorCode = 2;
+}
+
+message ReqFavoriteAdd {
+    string name = 1;
+    string scene = 2;
+    string remark = 3;
+}
+
+message ReqFavoriteUpdate {
+    string uid = 1;
+    string name = 2;
+    string remark = 3;
+}
+
+message ReplyFavoriteOne {
+    FavoriteInfo info = 1;
+    ResultStatus errorCode = 2;
+}
+
+message ReplyFavoriteList {
+    repeated FavoriteInfo list = 1;
+}
+
+message ReqFavoriteEntity {
+    string uid = 1;
+    repeated EntityInfo entities = 2;
+}
+
+message ReplyFavoriteEntities {
+    string uid = 1;
+    repeated EntityInfo entities = 2;
+    ResultStatus errorCode = 3;
+}
