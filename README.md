@@ -1,2 +1,2 @@
-# omo-msp-user
+# omo-msp-favorites
 Micro Service Protocol -favorite
