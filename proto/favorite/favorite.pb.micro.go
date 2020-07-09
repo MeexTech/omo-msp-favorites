@@ -44,8 +44,8 @@ func NewFavoriteServiceEndpoints() []*api.Endpoint {
 type FavoriteService interface {
 	AddOne(ctx context.Context, in *ReqFavoriteAdd, opts ...client.CallOption) (*ReplyFavoriteOne, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteOne, error)
-	GetListByScene(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error)
-	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyInfo, error)
+	GetList(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error)
+	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteOne, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	AppendEntity(ctx context.Context, in *ReqFavoriteEntity, opts ...client.CallOption) (*ReplyFavoriteEntities, error)
 	SubtractEntity(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteEntities, error)
@@ -83,8 +83,8 @@ func (c *favoriteService) GetOne(ctx context.Context, in *RequestInfo, opts ...c
 	return out, nil
 }
 
-func (c *favoriteService) GetListByScene(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.GetListByScene", in)
+func (c *favoriteService) GetList(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.GetList", in)
 	out := new(ReplyFavoriteList)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -93,9 +93,9 @@ func (c *favoriteService) GetListByScene(ctx context.Context, in *RequestInfo, o
 	return out, nil
 }
 
-func (c *favoriteService) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyInfo, error) {
+func (c *favoriteService) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteOne, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.UpdateBase", in)
-	out := new(ReplyInfo)
+	out := new(ReplyFavoriteOne)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -138,8 +138,8 @@ func (c *favoriteService) SubtractEntity(ctx context.Context, in *RequestInfo, o
 type FavoriteServiceHandler interface {
 	AddOne(context.Context, *ReqFavoriteAdd, *ReplyFavoriteOne) error
 	GetOne(context.Context, *RequestInfo, *ReplyFavoriteOne) error
-	GetListByScene(context.Context, *RequestInfo, *ReplyFavoriteList) error
-	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyInfo) error
+	GetList(context.Context, *RequestInfo, *ReplyFavoriteList) error
+	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyFavoriteOne) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	AppendEntity(context.Context, *ReqFavoriteEntity, *ReplyFavoriteEntities) error
 	SubtractEntity(context.Context, *RequestInfo, *ReplyFavoriteEntities) error
@@ -149,8 +149,8 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 	type favoriteService interface {
 		AddOne(ctx context.Context, in *ReqFavoriteAdd, out *ReplyFavoriteOne) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteOne) error
-		GetListByScene(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error
-		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyInfo) error
+		GetList(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error
+		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteOne) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		AppendEntity(ctx context.Context, in *ReqFavoriteEntity, out *ReplyFavoriteEntities) error
 		SubtractEntity(ctx context.Context, in *RequestInfo, out *ReplyFavoriteEntities) error
@@ -174,11 +174,11 @@ func (h *favoriteServiceHandler) GetOne(ctx context.Context, in *RequestInfo, ou
 	return h.FavoriteServiceHandler.GetOne(ctx, in, out)
 }
 
-func (h *favoriteServiceHandler) GetListByScene(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error {
-	return h.FavoriteServiceHandler.GetListByScene(ctx, in, out)
+func (h *favoriteServiceHandler) GetList(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error {
+	return h.FavoriteServiceHandler.GetList(ctx, in, out)
 }
 
-func (h *favoriteServiceHandler) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyInfo) error {
+func (h *favoriteServiceHandler) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteOne) error {
 	return h.FavoriteServiceHandler.UpdateBase(ctx, in, out)
 }
 

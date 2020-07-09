@@ -6,8 +6,8 @@ option go_package= "proto/favorite";
 service FavoriteService {
     rpc AddOne(ReqFavoriteAdd) returns (ReplyFavoriteOne) {}
     rpc GetOne(RequestInfo) returns (ReplyFavoriteOne) {}
-    rpc GetListByScene(RequestInfo) returns (ReplyFavoriteList) {}
-    rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyInfo) {}
+    rpc GetList(RequestInfo) returns (ReplyFavoriteList) {}
+    rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteOne) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
     rpc AppendEntity(ReqFavoriteEntity) returns (ReplyFavoriteEntities) {}
     rpc SubtractEntity(RequestInfo) returns (ReplyFavoriteEntities) {}
@@ -28,9 +28,11 @@ message FavoriteInfo {
     int64 created = 3;
     int64 updated = 4;
     string name = 5;
-    string scene = 6;
+    string owner = 6;
     string remark = 7;
-    repeated EntityInfo entities = 8;
+    string creator = 8;
+    string operator = 9;
+    repeated EntityInfo entities = 10;
 }
 
 message EntityInfo {
@@ -41,29 +43,32 @@ message EntityInfo {
 message RequestInfo {
     string uid = 1;
     string entity = 2;
-    string scene = 3;
+    string owner = 3;
+    string operator = 4;
 }
 
 message ReplyInfo {
     string uid = 1;
-    string scene = 2;
+    string owner = 2;
     string entity = 3;
     ResultStatus errorCode = 4;
 }
 
 message ReqFavoriteAdd {
     string name = 1;
-    string scene = 2;
+    string owner = 2;
     string remark = 3;
     string cover = 4;
+    int32 type = 5;
+    string operator = 6;
 }
 
 message ReqFavoriteUpdate {
     string uid = 1;
-    string scene = 2;
-    string name = 3;
-    string remark = 4;
-    string cover = 5;
+    string name = 2;
+    string remark = 3;
+    string cover = 4;
+    string operator = 5;
 }
 
 message ReplyFavoriteOne {
@@ -77,7 +82,7 @@ message ReplyFavoriteList {
 
 message ReqFavoriteEntity {
     string uid = 1;
-    string scene = 2;
+    string owner = 2;
     repeated EntityInfo entities = 3;
 }
 
