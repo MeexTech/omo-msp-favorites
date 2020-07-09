@@ -9,8 +9,7 @@ service FavoriteService {
     rpc GetList(RequestInfo) returns (ReplyFavoriteList) {}
     rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteOne) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-    rpc AppendEntity(ReqFavoriteEntity) returns (ReplyFavoriteEntities) {}
-    rpc SubtractEntity(RequestInfo) returns (ReplyFavoriteEntities) {}
+    rpc UpdateEntities(ReqFavoriteEntities) returns (ReplyFavoriteEntities) {}
 }
 
 enum ResultStatus {
@@ -80,7 +79,7 @@ message ReplyFavoriteList {
     repeated FavoriteInfo list = 1;
 }
 
-message ReqFavoriteEntity {
+message ReqFavoriteEntities {
     string uid = 1;
     string owner = 2;
     repeated EntityInfo entities = 3;
