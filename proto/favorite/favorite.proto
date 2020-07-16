@@ -81,7 +81,7 @@ message ReplyFavoriteList {
 
 message ReqFavoriteEntities {
     string uid = 1;
-    string owner = 2;
+    string operator = 2;
     repeated EntityInfo entities = 3;
 }
 
