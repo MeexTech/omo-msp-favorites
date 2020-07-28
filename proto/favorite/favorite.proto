@@ -31,7 +31,8 @@ message FavoriteInfo {
     string remark = 7;
     string creator = 8;
     string operator = 9;
-    repeated EntityInfo entities = 10;
+    string cover = 10;
+    repeated EntityInfo entities = 11;
 }
 
 message EntityInfo {
@@ -43,14 +44,14 @@ message RequestInfo {
     string uid = 1;
     string entity = 2;
     string owner = 3;
-    string operator = 4;
+    string operator = 5;
 }
 
 message ReplyInfo {
     string uid = 1;
     string owner = 2;
     string entity = 3;
-    ResultStatus errorCode = 4;
+    ResultStatus errorCode = 5;
 }
 
 message ReqFavoriteAdd {
