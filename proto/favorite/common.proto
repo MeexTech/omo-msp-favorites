@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package omo.msp.Favorite;
+option go_package= "proto/favorite";
+
+enum ResultStatus {
+  Success = 0;
+  MaxLimit = 1;
+  Repeated = 2;
+  NotExisted = 3;
+  DBException = 4;
+  Empty = 5;
+}
+
+message RequestInfo {
+  string uid = 1;
+  string entity = 2;
+  string owner = 3;
+  string operator = 5;
+}
+
+message ReplyStatus {
+  uint32 code = 1;
+  string error = 2;
+}
+
+message ReplyInfo {
+  string uid = 1;
+  string parent = 2;
+  ReplyStatus status = 3;
+}

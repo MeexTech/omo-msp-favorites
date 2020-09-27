@@ -1,3 +1,5 @@
 .PHONY: proto
 proto:
+	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/common.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/favorite.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/repertory.proto
