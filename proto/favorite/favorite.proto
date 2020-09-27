@@ -4,10 +4,10 @@ package omo.msp.Favorite;
 option go_package= "proto/favorite";
 
 service FavoriteService {
-    rpc AddOne(ReqFavoriteAdd) returns (ReplyFavoriteOne) {}
-    rpc GetOne(RequestInfo) returns (ReplyFavoriteOne) {}
+    rpc AddOne(ReqFavoriteAdd) returns (ReplyFavoriteInfo) {}
+    rpc GetOne(RequestInfo) returns (ReplyFavoriteInfo) {}
     rpc GetList(RequestInfo) returns (ReplyFavoriteList) {}
-    rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteOne) {}
+    rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteInfo) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
     rpc UpdateEntities(ReqFavoriteEntities) returns (ReplyFavoriteEntities) {}
 }
@@ -47,11 +47,15 @@ message RequestInfo {
     string operator = 5;
 }
 
+message ReplyStatus {
+    uint32 code = 1;
+    string error = 2;
+}
+
 message ReplyInfo {
     string uid = 1;
-    string owner = 2;
-    string entity = 3;
-    ResultStatus errorCode = 5;
+    string parent = 2;
+    ReplyStatus status = 3;
 }
 
 message ReqFavoriteAdd {
@@ -71,13 +75,14 @@ message ReqFavoriteUpdate {
     string operator = 5;
 }
 
-message ReplyFavoriteOne {
+message ReplyFavoriteInfo {
     FavoriteInfo info = 1;
-    ResultStatus errorCode = 2;
+    ReplyStatus status = 2;
 }
 
 message ReplyFavoriteList {
     repeated FavoriteInfo list = 1;
+    ReplyStatus status = 2;
 }
 
 message ReqFavoriteEntities {
@@ -89,5 +94,5 @@ message ReqFavoriteEntities {
 message ReplyFavoriteEntities {
     string uid = 1;
     repeated EntityInfo entities = 2;
-    ResultStatus errorCode = 3;
+    ReplyStatus status = 3;
 }

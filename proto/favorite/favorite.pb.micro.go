@@ -42,10 +42,10 @@ func NewFavoriteServiceEndpoints() []*api.Endpoint {
 // Client API for FavoriteService service
 
 type FavoriteService interface {
-	AddOne(ctx context.Context, in *ReqFavoriteAdd, opts ...client.CallOption) (*ReplyFavoriteOne, error)
-	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteOne, error)
+	AddOne(ctx context.Context, in *ReqFavoriteAdd, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
+	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	GetList(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error)
-	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteOne, error)
+	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateEntities(ctx context.Context, in *ReqFavoriteEntities, opts ...client.CallOption) (*ReplyFavoriteEntities, error)
 }
@@ -62,9 +62,9 @@ func NewFavoriteService(name string, c client.Client) FavoriteService {
 	}
 }
 
-func (c *favoriteService) AddOne(ctx context.Context, in *ReqFavoriteAdd, opts ...client.CallOption) (*ReplyFavoriteOne, error) {
+func (c *favoriteService) AddOne(ctx context.Context, in *ReqFavoriteAdd, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.AddOne", in)
-	out := new(ReplyFavoriteOne)
+	out := new(ReplyFavoriteInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -72,9 +72,9 @@ func (c *favoriteService) AddOne(ctx context.Context, in *ReqFavoriteAdd, opts .
 	return out, nil
 }
 
-func (c *favoriteService) GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteOne, error) {
+func (c *favoriteService) GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.GetOne", in)
-	out := new(ReplyFavoriteOne)
+	out := new(ReplyFavoriteInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -92,9 +92,9 @@ func (c *favoriteService) GetList(ctx context.Context, in *RequestInfo, opts ...
 	return out, nil
 }
 
-func (c *favoriteService) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteOne, error) {
+func (c *favoriteService) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.UpdateBase", in)
-	out := new(ReplyFavoriteOne)
+	out := new(ReplyFavoriteInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -125,20 +125,20 @@ func (c *favoriteService) UpdateEntities(ctx context.Context, in *ReqFavoriteEnt
 // Server API for FavoriteService service
 
 type FavoriteServiceHandler interface {
-	AddOne(context.Context, *ReqFavoriteAdd, *ReplyFavoriteOne) error
-	GetOne(context.Context, *RequestInfo, *ReplyFavoriteOne) error
+	AddOne(context.Context, *ReqFavoriteAdd, *ReplyFavoriteInfo) error
+	GetOne(context.Context, *RequestInfo, *ReplyFavoriteInfo) error
 	GetList(context.Context, *RequestInfo, *ReplyFavoriteList) error
-	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyFavoriteOne) error
+	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyFavoriteInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	UpdateEntities(context.Context, *ReqFavoriteEntities, *ReplyFavoriteEntities) error
 }
 
 func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler, opts ...server.HandlerOption) error {
 	type favoriteService interface {
-		AddOne(ctx context.Context, in *ReqFavoriteAdd, out *ReplyFavoriteOne) error
-		GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteOne) error
+		AddOne(ctx context.Context, in *ReqFavoriteAdd, out *ReplyFavoriteInfo) error
+		GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error
 		GetList(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error
-		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteOne) error
+		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		UpdateEntities(ctx context.Context, in *ReqFavoriteEntities, out *ReplyFavoriteEntities) error
 	}
@@ -153,11 +153,11 @@ type favoriteServiceHandler struct {
 	FavoriteServiceHandler
 }
 
-func (h *favoriteServiceHandler) AddOne(ctx context.Context, in *ReqFavoriteAdd, out *ReplyFavoriteOne) error {
+func (h *favoriteServiceHandler) AddOne(ctx context.Context, in *ReqFavoriteAdd, out *ReplyFavoriteInfo) error {
 	return h.FavoriteServiceHandler.AddOne(ctx, in, out)
 }
 
-func (h *favoriteServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteOne) error {
+func (h *favoriteServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error {
 	return h.FavoriteServiceHandler.GetOne(ctx, in, out)
 }
 
@@ -165,7 +165,7 @@ func (h *favoriteServiceHandler) GetList(ctx context.Context, in *RequestInfo, o
 	return h.FavoriteServiceHandler.GetList(ctx, in, out)
 }
 
-func (h *favoriteServiceHandler) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteOne) error {
+func (h *favoriteServiceHandler) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error {
 	return h.FavoriteServiceHandler.UpdateBase(ctx, in, out)
 }
 
