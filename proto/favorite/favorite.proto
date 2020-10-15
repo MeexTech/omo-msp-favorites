@@ -9,6 +9,7 @@ service FavoriteService {
     rpc GetOne(RequestInfo) returns (ReplyFavoriteInfo) {}
     rpc GetList(RequestInfo) returns (ReplyFavoriteList) {}
     rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteInfo) {}
+    rpc UpdateTags(ReqFavoriteTags) returns (ReplyFavoriteInfo) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
     rpc UpdateEntities(ReqFavoriteEntities) returns (ReplyFavoriteEntities) {}
     rpc AppendEntity(RequestInfo) returns (ReplyFavoriteEntities){}
@@ -26,7 +27,8 @@ message FavoriteInfo {
     string creator = 8;
     string operator = 9;
     string cover = 10;
-    repeated string entities = 11;
+    repeated string tags = 11;
+    repeated string entities = 12;
 }
 
 message ReqFavoriteAdd {
@@ -36,6 +38,8 @@ message ReqFavoriteAdd {
     string cover = 4;
     int32 type = 5;
     string operator = 6;
+    repeated string entities = 7;
+    repeated string tags = 8;
 }
 
 message ReqFavoriteUpdate {
@@ -46,14 +50,20 @@ message ReqFavoriteUpdate {
     string operator = 5;
 }
 
+message ReqFavoriteTags{
+    string uid = 1;
+    string operator = 2;
+    repeated string tags = 3;
+}
+
 message ReplyFavoriteInfo {
     FavoriteInfo info = 1;
     ReplyStatus status = 2;
 }
 
 message ReplyFavoriteList {
-    repeated FavoriteInfo list = 1;
-    ReplyStatus status = 2;
+    ReplyStatus status = 1;
+    repeated FavoriteInfo list = 2;
 }
 
 message ReqFavoriteEntities {

@@ -46,6 +46,7 @@ type FavoriteService interface {
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	GetList(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
+	UpdateTags(ctx context.Context, in *ReqFavoriteTags, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateEntities(ctx context.Context, in *ReqFavoriteEntities, opts ...client.CallOption) (*ReplyFavoriteEntities, error)
 	AppendEntity(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteEntities, error)
@@ -104,6 +105,16 @@ func (c *favoriteService) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate,
 	return out, nil
 }
 
+func (c *favoriteService) UpdateTags(ctx context.Context, in *ReqFavoriteTags, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.UpdateTags", in)
+	out := new(ReplyFavoriteInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *favoriteService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.RemoveOne", in)
 	out := new(ReplyInfo)
@@ -151,6 +162,7 @@ type FavoriteServiceHandler interface {
 	GetOne(context.Context, *RequestInfo, *ReplyFavoriteInfo) error
 	GetList(context.Context, *RequestInfo, *ReplyFavoriteList) error
 	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyFavoriteInfo) error
+	UpdateTags(context.Context, *ReqFavoriteTags, *ReplyFavoriteInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	UpdateEntities(context.Context, *ReqFavoriteEntities, *ReplyFavoriteEntities) error
 	AppendEntity(context.Context, *RequestInfo, *ReplyFavoriteEntities) error
@@ -163,6 +175,7 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error
 		GetList(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error
 		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error
+		UpdateTags(ctx context.Context, in *ReqFavoriteTags, out *ReplyFavoriteInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		UpdateEntities(ctx context.Context, in *ReqFavoriteEntities, out *ReplyFavoriteEntities) error
 		AppendEntity(ctx context.Context, in *RequestInfo, out *ReplyFavoriteEntities) error
@@ -193,6 +206,10 @@ func (h *favoriteServiceHandler) GetList(ctx context.Context, in *RequestInfo, o
 
 func (h *favoriteServiceHandler) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error {
 	return h.FavoriteServiceHandler.UpdateBase(ctx, in, out)
+}
+
+func (h *favoriteServiceHandler) UpdateTags(ctx context.Context, in *ReqFavoriteTags, out *ReplyFavoriteInfo) error {
+	return h.FavoriteServiceHandler.UpdateTags(ctx, in, out)
 }
 
 func (h *favoriteServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
