@@ -36,6 +36,7 @@ var _ server.Option
 type FavoriteService interface {
 	AddOne(ctx context.Context, in *ReqFavoriteAdd, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
+	GetByOrigin(ctx context.Context, in *RequestOne, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	GetList(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	UpdateTags(ctx context.Context, in *ReqFavoriteTags, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
@@ -69,6 +70,16 @@ func (c *favoriteService) AddOne(ctx context.Context, in *ReqFavoriteAdd, opts .
 
 func (c *favoriteService) GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.GetOne", in)
+	out := new(ReplyFavoriteInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *favoriteService) GetByOrigin(ctx context.Context, in *RequestOne, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.GetByOrigin", in)
 	out := new(ReplyFavoriteInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -152,6 +163,7 @@ func (c *favoriteService) SubtractEntity(ctx context.Context, in *RequestInfo, o
 type FavoriteServiceHandler interface {
 	AddOne(context.Context, *ReqFavoriteAdd, *ReplyFavoriteInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyFavoriteInfo) error
+	GetByOrigin(context.Context, *RequestOne, *ReplyFavoriteInfo) error
 	GetList(context.Context, *RequestInfo, *ReplyFavoriteList) error
 	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyFavoriteInfo) error
 	UpdateTags(context.Context, *ReqFavoriteTags, *ReplyFavoriteInfo) error
@@ -165,6 +177,7 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 	type favoriteService interface {
 		AddOne(ctx context.Context, in *ReqFavoriteAdd, out *ReplyFavoriteInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error
+		GetByOrigin(ctx context.Context, in *RequestOne, out *ReplyFavoriteInfo) error
 		GetList(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error
 		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error
 		UpdateTags(ctx context.Context, in *ReqFavoriteTags, out *ReplyFavoriteInfo) error
@@ -190,6 +203,10 @@ func (h *favoriteServiceHandler) AddOne(ctx context.Context, in *ReqFavoriteAdd,
 
 func (h *favoriteServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error {
 	return h.FavoriteServiceHandler.GetOne(ctx, in, out)
+}
+
+func (h *favoriteServiceHandler) GetByOrigin(ctx context.Context, in *RequestOne, out *ReplyFavoriteInfo) error {
+	return h.FavoriteServiceHandler.GetByOrigin(ctx, in, out)
 }
 
 func (h *favoriteServiceHandler) GetList(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error {
