@@ -27,8 +27,9 @@ message FavoriteInfo {
     string creator = 8;
     string operator = 9;
     string cover = 10;
-    repeated string tags = 11;
-    repeated string entities = 12;
+    string origin = 11;
+    repeated string tags = 12;
+    repeated string entities = 13;
 }
 
 message ReqFavoriteAdd {
@@ -38,8 +39,9 @@ message ReqFavoriteAdd {
     string cover = 4;
     int32 type = 5;
     string operator = 6;
-    repeated string entities = 7;
-    repeated string tags = 8;
+    string origin = 7;
+    repeated string entities = 8;
+    repeated string tags = 9;
 }
 
 message ReqFavoriteUpdate {
@@ -48,6 +50,7 @@ message ReqFavoriteUpdate {
     string remark = 3;
     string cover = 4;
     string operator = 5;
+    string origin = 6;
 }
 
 message ReqFavoriteTags{
