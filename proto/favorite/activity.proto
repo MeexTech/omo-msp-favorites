@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package omo.msp.Favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service ActivityService {
+  rpc AddOne(ReqActivityAdd) returns (ReplyActivityInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyActivityInfo) {}
+  rpc GetList(RequestInfo) returns (ReplyActivityList) {}
+  rpc UpdateBase(ReqActivityUpdate) returns (ReplyActivityInfo) {}
+  rpc UpdateTags(RequestList) returns (ReplyList) {}
+  rpc UpdateAssets(RequestList) returns (ReplyList) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc AppendOne(RequestInfo) returns (ReplyList){}
+  rpc SubtractOne(RequestInfo) returns (ReplyList){}
+}
+
+message ActivityInfo {
+  string uid = 1;
+  uint64 id = 2;
+  uint32 type = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  string creator = 6;
+  string operator = 7;
+  string name = 8;
+  string remark = 9;
+  string cover = 10;
+  string owner = 11;
+  DateInfo date = 12;
+  PlaceInfo place = 13;
+  string organizer = 14;
+  repeated string tags = 15;
+  repeated string assets = 16;
+  repeated string participants = 17;
+}
+
+message ReqActivityAdd {
+  string name = 1;
+  string owner = 2;
+  string remark = 3;
+  string cover = 4;
+  int32 type = 5;
+  string operator = 6;
+  DateInfo date = 7;
+  PlaceInfo place = 8;
+  string organizer = 9;
+  repeated string assets = 10;
+  repeated string participants = 11;
+  repeated string tags = 12;
+}
+
+message ReqActivityUpdate {
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string cover = 4;
+  string operator = 5;
+  DateInfo date = 6;
+  PlaceInfo place = 7;
+  string organizer = 8;
+}
+
+message ReplyActivityInfo {
+  ReplyStatus status = 1;
+  ActivityInfo info = 2;
+}
+
+message ReplyActivityList {
+  ReplyStatus status = 1;
+  repeated ActivityInfo list = 2;
+}
