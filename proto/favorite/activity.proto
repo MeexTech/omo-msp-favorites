@@ -26,14 +26,15 @@ message ActivityInfo {
   string operator = 7;
   string name = 8;
   string remark = 9;
-  string cover = 10;
-  string owner = 11;
-  DateInfo date = 12;
-  PlaceInfo place = 13;
-  string organizer = 14;
-  repeated string tags = 15;
-  repeated string assets = 16;
-  repeated string participants = 17;
+  string require = 10;
+  string cover = 11;
+  string owner = 12;
+  DateInfo date = 13;
+  PlaceInfo place = 14;
+  string organizer = 15;
+  repeated string tags = 16;
+  repeated string assets = 17;
+  repeated string participants = 18;
 }
 
 message ReqActivityAdd {
@@ -46,9 +47,10 @@ message ReqActivityAdd {
   DateInfo date = 7;
   PlaceInfo place = 8;
   string organizer = 9;
-  repeated string assets = 10;
-  repeated string participants = 11;
+  string require = 10;
+  repeated string assets = 11;
   repeated string tags = 12;
+  repeated string participants = 13;
 }
 
 message ReqActivityUpdate {
@@ -60,6 +62,7 @@ message ReqActivityUpdate {
   DateInfo date = 6;
   PlaceInfo place = 7;
   string organizer = 8;
+  string require = 9;
 }
 
 message ReplyActivityInfo {
