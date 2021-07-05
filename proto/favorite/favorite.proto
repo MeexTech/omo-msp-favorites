@@ -30,7 +30,6 @@ message FavoriteInfo {
     string cover = 10;
     string origin = 11;
     uint32 type = 12;
-    bool person = 13;
     repeated string tags = 14;
     repeated string keys = 15;
 }
