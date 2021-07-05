@@ -12,9 +12,9 @@ service FavoriteService {
     rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteInfo) {}
     rpc UpdateTags(ReqFavoriteTags) returns (ReplyFavoriteInfo) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-    rpc UpdateEntities(ReqFavoriteEntities) returns (ReplyFavoriteEntities) {}
-    rpc AppendEntity(RequestInfo) returns (ReplyFavoriteEntities){}
-    rpc SubtractEntity(RequestInfo) returns (ReplyFavoriteEntities){}
+    rpc UpdateKeys(ReqFavoriteKeys) returns (ReplyFavoriteKeys) {}
+    rpc AppendEntity(RequestInfo) returns (ReplyFavoriteKeys){}
+    rpc SubtractEntity(RequestInfo) returns (ReplyFavoriteKeys){}
 }
 
 message FavoriteInfo {
@@ -29,8 +29,10 @@ message FavoriteInfo {
     string operator = 9;
     string cover = 10;
     string origin = 11;
-    repeated string tags = 12;
-    repeated string entities = 13;
+    uint32 type = 12;
+    bool person = 13;
+    repeated string tags = 14;
+    repeated string keys = 15;
 }
 
 message ReqFavoriteAdd {
@@ -41,8 +43,9 @@ message ReqFavoriteAdd {
     int32 type = 5;
     string operator = 6;
     string origin = 7;
-    repeated string entities = 8;
-    repeated string tags = 9;
+    bool person = 8;
+    repeated string keys = 9;
+    repeated string tags = 10;
 }
 
 message ReqFavoriteUpdate {
@@ -52,12 +55,15 @@ message ReqFavoriteUpdate {
     string cover = 4;
     string operator = 5;
     string origin = 6;
+    uint32 type = 7;
+    bool person = 8;
 }
 
 message ReqFavoriteTags{
     string uid = 1;
     string operator = 2;
-    repeated string tags = 3;
+    bool person = 3;
+    repeated string tags = 4;
 }
 
 message ReplyFavoriteInfo {
@@ -70,14 +76,15 @@ message ReplyFavoriteList {
     repeated FavoriteInfo list = 2;
 }
 
-message ReqFavoriteEntities {
+message ReqFavoriteKeys {
     string uid = 1;
     string operator = 2;
-    repeated string entities = 3;
+    bool person = 3;
+    repeated string keys = 4;
 }
 
-message ReplyFavoriteEntities {
+message ReplyFavoriteKeys {
     string uid = 1;
-    repeated string entities = 2;
+    repeated string key = 2;
     ReplyStatus status = 3;
 }
