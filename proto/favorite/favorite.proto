@@ -84,6 +84,6 @@ message ReqFavoriteKeys {
 
 message ReplyFavoriteKeys {
     string uid = 1;
-    repeated string key = 2;
+    repeated string keys = 2;
     ReplyStatus status = 3;
 }
