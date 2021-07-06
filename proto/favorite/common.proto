@@ -49,7 +49,8 @@ message ReplyInfo {
 message RequestList{
   string uid = 1;
   string operator = 2;
-  repeated string list = 3;
+  bool person = 3;
+  repeated string list = 4;
 }
 
 message ReplyList{
