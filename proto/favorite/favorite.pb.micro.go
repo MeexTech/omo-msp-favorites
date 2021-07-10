@@ -37,7 +37,7 @@ type FavoriteService interface {
 	AddOne(ctx context.Context, in *ReqFavoriteAdd, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	GetByOrigin(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
-	GetList(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error)
+	GetList(ctx context.Context, in *ReqFavoriteList, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	GetByList(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	UpdateTags(ctx context.Context, in *ReqFavoriteTags, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
@@ -89,7 +89,7 @@ func (c *favoriteService) GetByOrigin(ctx context.Context, in *RequestInfo, opts
 	return out, nil
 }
 
-func (c *favoriteService) GetList(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteList, error) {
+func (c *favoriteService) GetList(ctx context.Context, in *ReqFavoriteList, opts ...client.CallOption) (*ReplyFavoriteList, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.GetList", in)
 	out := new(ReplyFavoriteList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -175,7 +175,7 @@ type FavoriteServiceHandler interface {
 	AddOne(context.Context, *ReqFavoriteAdd, *ReplyFavoriteInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyFavoriteInfo) error
 	GetByOrigin(context.Context, *RequestInfo, *ReplyFavoriteInfo) error
-	GetList(context.Context, *RequestInfo, *ReplyFavoriteList) error
+	GetList(context.Context, *ReqFavoriteList, *ReplyFavoriteList) error
 	GetByList(context.Context, *RequestList, *ReplyFavoriteList) error
 	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyFavoriteInfo) error
 	UpdateTags(context.Context, *ReqFavoriteTags, *ReplyFavoriteInfo) error
@@ -190,7 +190,7 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 		AddOne(ctx context.Context, in *ReqFavoriteAdd, out *ReplyFavoriteInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error
 		GetByOrigin(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error
-		GetList(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error
+		GetList(ctx context.Context, in *ReqFavoriteList, out *ReplyFavoriteList) error
 		GetByList(ctx context.Context, in *RequestList, out *ReplyFavoriteList) error
 		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error
 		UpdateTags(ctx context.Context, in *ReqFavoriteTags, out *ReplyFavoriteInfo) error
@@ -222,7 +222,7 @@ func (h *favoriteServiceHandler) GetByOrigin(ctx context.Context, in *RequestInf
 	return h.FavoriteServiceHandler.GetByOrigin(ctx, in, out)
 }
 
-func (h *favoriteServiceHandler) GetList(ctx context.Context, in *RequestInfo, out *ReplyFavoriteList) error {
+func (h *favoriteServiceHandler) GetList(ctx context.Context, in *ReqFavoriteList, out *ReplyFavoriteList) error {
 	return h.FavoriteServiceHandler.GetList(ctx, in, out)
 }
 

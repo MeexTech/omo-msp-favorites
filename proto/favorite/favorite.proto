@@ -8,7 +8,7 @@ service FavoriteService {
     rpc AddOne(ReqFavoriteAdd) returns (ReplyFavoriteInfo) {}
     rpc GetOne(RequestInfo) returns (ReplyFavoriteInfo) {}
     rpc GetByOrigin(RequestInfo) returns (ReplyFavoriteInfo) {}
-    rpc GetList(RequestInfo) returns (ReplyFavoriteList) {}
+    rpc GetList(ReqFavoriteList) returns (ReplyFavoriteList) {}
     rpc GetByList(RequestList) returns (ReplyFavoriteList) {}
     rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteInfo) {}
     rpc UpdateTags(ReqFavoriteTags) returns (ReplyFavoriteInfo) {}
@@ -64,6 +64,12 @@ message ReqFavoriteTags{
     string operator = 2;
     bool person = 3;
     repeated string tags = 4;
+}
+
+message ReqFavoriteList{
+    string owner = 1;
+    uint32 type = 2;
+    bool person = 3;
 }
 
 message ReplyFavoriteInfo {
