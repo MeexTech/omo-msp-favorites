@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package omo.msp.Favorite;
+package omo.msp.favorite;
 option go_package= "proto/favorite";
 import "proto/favorite/common.proto";
 

@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package omo.msp.favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service SlotService {
+  rpc AddOne(ReqSlotAdd) returns (ReplySlotInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplySlotInfo) {}
+  rpc GetList(RequestInfo) returns (ReplySlotList) {}
+  rpc UpdateBase(ReqSlotUpdate) returns (ReplySlotInfo) {}
+  rpc UpdateKeywords(ReqSlotKeywords) returns (ReplySlotInfo) {}
+}
+
+message SlotInfo {
+  string uid = 1;
+  uint64 id = 2;
+  uint32 type = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  string creator = 6;
+  string operator = 7;
+  string name = 8;
+  string remark = 9;
+  string begin = 10;
+  string end = 11;
+  string key = 12;
+  repeated string keywords = 16;
+}
+
+message ReqSlotAdd{
+  string name = 1;
+  string remark = 2;
+  string begin = 3;
+  string end = 4;
+  string key = 5;
+}
+
+message ReqSlotUpdate{
+  string uid = 1;
+  string name = 2;
+  string begin = 3;
+  string end = 4;
+  string remark = 5;
+  string key = 6;
+}
+
+message ReqSlotKeywords{
+  string uid = 1;
+  repeated string keywords = 2;
+}
+
+message ReplySlotInfo {
+  ReplyStatus status = 1;
+  SlotInfo info = 2;
+}
+
+message ReplySlotList {
+  ReplyStatus status = 1;
+  repeated SlotInfo list = 2;
+}
