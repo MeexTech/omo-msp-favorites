@@ -11,6 +11,7 @@ service ActivityService {
   rpc UpdateBase(ReqActivityUpdate) returns (ReplyActivityInfo) {}
   rpc UpdateTags(RequestList) returns (ReplyList) {}
   rpc UpdateAssets(RequestList) returns (ReplyList) {}
+  rpc UpdateTargets(RequestList) returns (ReplyList) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc AppendOne(RequestInfo) returns (ReplyList){}
   rpc SubtractOne(RequestInfo) returns (ReplyList){}
@@ -35,6 +36,7 @@ message ActivityInfo {
   repeated string tags = 16;
   repeated string assets = 17;
   repeated string participants = 18;
+  repeated string targets = 19;
 }
 
 message ReqActivityAdd {
@@ -51,6 +53,7 @@ message ReqActivityAdd {
   repeated string assets = 11;
   repeated string tags = 12;
   repeated string participants = 13;
+  repeated string targets = 14;
 }
 
 message ReqActivityUpdate {

@@ -40,6 +40,7 @@ type FavoriteService interface {
 	GetList(ctx context.Context, in *ReqFavoriteList, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	GetByList(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
+	UpdateMeta(ctx context.Context, in *ReqFavoriteMeta, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	UpdateTags(ctx context.Context, in *ReqFavoriteTags, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
@@ -119,6 +120,16 @@ func (c *favoriteService) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate,
 	return out, nil
 }
 
+func (c *favoriteService) UpdateMeta(ctx context.Context, in *ReqFavoriteMeta, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.UpdateMeta", in)
+	out := new(ReplyFavoriteInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *favoriteService) UpdateTags(ctx context.Context, in *ReqFavoriteTags, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.UpdateTags", in)
 	out := new(ReplyFavoriteInfo)
@@ -178,6 +189,7 @@ type FavoriteServiceHandler interface {
 	GetList(context.Context, *ReqFavoriteList, *ReplyFavoriteList) error
 	GetByList(context.Context, *RequestList, *ReplyFavoriteList) error
 	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyFavoriteInfo) error
+	UpdateMeta(context.Context, *ReqFavoriteMeta, *ReplyFavoriteInfo) error
 	UpdateTags(context.Context, *ReqFavoriteTags, *ReplyFavoriteInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	UpdateKeys(context.Context, *ReqFavoriteKeys, *ReplyFavoriteKeys) error
@@ -193,6 +205,7 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 		GetList(ctx context.Context, in *ReqFavoriteList, out *ReplyFavoriteList) error
 		GetByList(ctx context.Context, in *RequestList, out *ReplyFavoriteList) error
 		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error
+		UpdateMeta(ctx context.Context, in *ReqFavoriteMeta, out *ReplyFavoriteInfo) error
 		UpdateTags(ctx context.Context, in *ReqFavoriteTags, out *ReplyFavoriteInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, out *ReplyFavoriteKeys) error
@@ -232,6 +245,10 @@ func (h *favoriteServiceHandler) GetByList(ctx context.Context, in *RequestList,
 
 func (h *favoriteServiceHandler) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error {
 	return h.FavoriteServiceHandler.UpdateBase(ctx, in, out)
+}
+
+func (h *favoriteServiceHandler) UpdateMeta(ctx context.Context, in *ReqFavoriteMeta, out *ReplyFavoriteInfo) error {
+	return h.FavoriteServiceHandler.UpdateMeta(ctx, in, out)
 }
 
 func (h *favoriteServiceHandler) UpdateTags(ctx context.Context, in *ReqFavoriteTags, out *ReplyFavoriteInfo) error {

@@ -11,6 +11,7 @@ service FavoriteService {
     rpc GetList(ReqFavoriteList) returns (ReplyFavoriteList) {}
     rpc GetByList(RequestList) returns (ReplyFavoriteList) {}
     rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteInfo) {}
+    rpc UpdateMeta(ReqFavoriteMeta) returns (ReplyFavoriteInfo) {}
     rpc UpdateTags(ReqFavoriteTags) returns (ReplyFavoriteInfo) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
     rpc UpdateKeys(ReqFavoriteKeys) returns (ReplyFavoriteKeys) {}
@@ -31,6 +32,7 @@ message FavoriteInfo {
     string cover = 10;
     string origin = 11;
     uint32 type = 12;
+    string meta = 13;
     repeated string tags = 14;
     repeated string keys = 15;
 }
@@ -70,6 +72,13 @@ message ReqFavoriteList{
     string owner = 1;
     uint32 type = 2;
     bool person = 3;
+}
+
+message ReqFavoriteMeta{
+    string uid = 1;
+    string operator = 2;
+    bool person = 3;
+    string meta = 4;
 }
 
 message ReplyFavoriteInfo {

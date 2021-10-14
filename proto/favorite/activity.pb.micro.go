@@ -40,6 +40,7 @@ type ActivityService interface {
 	UpdateBase(ctx context.Context, in *ReqActivityUpdate, opts ...client.CallOption) (*ReplyActivityInfo, error)
 	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
+	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	AppendOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error)
 	SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error)
@@ -117,6 +118,16 @@ func (c *activityService) UpdateAssets(ctx context.Context, in *RequestList, opt
 	return out, nil
 }
 
+func (c *activityService) UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error) {
+	req := c.c.NewRequest(c.name, "ActivityService.UpdateTargets", in)
+	out := new(ReplyList)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *activityService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "ActivityService.RemoveOne", in)
 	out := new(ReplyInfo)
@@ -156,6 +167,7 @@ type ActivityServiceHandler interface {
 	UpdateBase(context.Context, *ReqActivityUpdate, *ReplyActivityInfo) error
 	UpdateTags(context.Context, *RequestList, *ReplyList) error
 	UpdateAssets(context.Context, *RequestList, *ReplyList) error
+	UpdateTargets(context.Context, *RequestList, *ReplyList) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	AppendOne(context.Context, *RequestInfo, *ReplyList) error
 	SubtractOne(context.Context, *RequestInfo, *ReplyList) error
@@ -169,6 +181,7 @@ func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler
 		UpdateBase(ctx context.Context, in *ReqActivityUpdate, out *ReplyActivityInfo) error
 		UpdateTags(ctx context.Context, in *RequestList, out *ReplyList) error
 		UpdateAssets(ctx context.Context, in *RequestList, out *ReplyList) error
+		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyList) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		AppendOne(ctx context.Context, in *RequestInfo, out *ReplyList) error
 		SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyList) error
@@ -206,6 +219,10 @@ func (h *activityServiceHandler) UpdateTags(ctx context.Context, in *RequestList
 
 func (h *activityServiceHandler) UpdateAssets(ctx context.Context, in *RequestList, out *ReplyList) error {
 	return h.ActivityServiceHandler.UpdateAssets(ctx, in, out)
+}
+
+func (h *activityServiceHandler) UpdateTargets(ctx context.Context, in *RequestList, out *ReplyList) error {
+	return h.ActivityServiceHandler.UpdateTargets(ctx, in, out)
 }
 
 func (h *activityServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
