@@ -36,7 +36,7 @@ message ActivityInfo {
   uint32 limit = 16;
   repeated string tags = 17;
   repeated string assets = 18;
-  repeated string participants = 19;
+  repeated PairInfo participants = 19;
   repeated string targets = 20;
 }
 
