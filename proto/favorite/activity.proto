@@ -13,8 +13,8 @@ service ActivityService {
   rpc UpdateAssets(RequestList) returns (ReplyList) {}
   rpc UpdateTargets(RequestList) returns (ReplyList) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-  rpc AppendOne(RequestInfo) returns (ReplyList){}
-  rpc SubtractOne(RequestInfo) returns (ReplyList){}
+  rpc AppendOne(RequestInfo) returns (ReplyPairList){}
+  rpc SubtractOne(RequestInfo) returns (ReplyPairList){}
 }
 
 message ActivityInfo {
@@ -79,4 +79,9 @@ message ReplyActivityInfo {
 message ReplyActivityList {
   ReplyStatus status = 1;
   repeated ActivityInfo list = 2;
+}
+
+message ReplyPairList {
+  ReplyStatus status = 1;
+  repeated PairInfo list = 2;
 }

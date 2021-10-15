@@ -42,8 +42,8 @@ type ActivityService interface {
 	UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	AppendOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error)
-	SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error)
+	AppendOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
+	SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
 }
 
 type activityService struct {
@@ -138,9 +138,9 @@ func (c *activityService) RemoveOne(ctx context.Context, in *RequestInfo, opts .
 	return out, nil
 }
 
-func (c *activityService) AppendOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error) {
+func (c *activityService) AppendOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error) {
 	req := c.c.NewRequest(c.name, "ActivityService.AppendOne", in)
-	out := new(ReplyList)
+	out := new(ReplyPairList)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -148,9 +148,9 @@ func (c *activityService) AppendOne(ctx context.Context, in *RequestInfo, opts .
 	return out, nil
 }
 
-func (c *activityService) SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyList, error) {
+func (c *activityService) SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error) {
 	req := c.c.NewRequest(c.name, "ActivityService.SubtractOne", in)
-	out := new(ReplyList)
+	out := new(ReplyPairList)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -169,8 +169,8 @@ type ActivityServiceHandler interface {
 	UpdateAssets(context.Context, *RequestList, *ReplyList) error
 	UpdateTargets(context.Context, *RequestList, *ReplyList) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	AppendOne(context.Context, *RequestInfo, *ReplyList) error
-	SubtractOne(context.Context, *RequestInfo, *ReplyList) error
+	AppendOne(context.Context, *RequestInfo, *ReplyPairList) error
+	SubtractOne(context.Context, *RequestInfo, *ReplyPairList) error
 }
 
 func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler, opts ...server.HandlerOption) error {
@@ -183,8 +183,8 @@ func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler
 		UpdateAssets(ctx context.Context, in *RequestList, out *ReplyList) error
 		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyList) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		AppendOne(ctx context.Context, in *RequestInfo, out *ReplyList) error
-		SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyList) error
+		AppendOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
+		SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
 	}
 	type ActivityService struct {
 		activityService
@@ -229,10 +229,10 @@ func (h *activityServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo,
 	return h.ActivityServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *activityServiceHandler) AppendOne(ctx context.Context, in *RequestInfo, out *ReplyList) error {
+func (h *activityServiceHandler) AppendOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error {
 	return h.ActivityServiceHandler.AppendOne(ctx, in, out)
 }
 
-func (h *activityServiceHandler) SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyList) error {
+func (h *activityServiceHandler) SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error {
 	return h.ActivityServiceHandler.SubtractOne(ctx, in, out)
 }
