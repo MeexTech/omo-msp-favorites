@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package omo.msp.favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service ArticleService {
+  rpc AddOne(ReqArticleAdd) returns (ReplyArticleInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyArticleInfo) {}
+  rpc GetList(ReqArticleList) returns (ReplyArticleList) {}
+  rpc UpdateBase(ReqArticleUpdate) returns (ReplyArticleInfo) {}
+  rpc UpdateAssets(ReqArticleAssets) returns (ReplyInfo) {}
+  rpc UpdateStatus(ReqArticleState) returns (ReplyInfo) {}
+}
+
+message ArticleInfo {
+  string uid = 1;
+  uint64 id = 2;
+  uint32 type = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  string creator = 6;
+  string operator = 7;
+  string name = 8;
+  string body = 9;
+  string subtitle = 10;
+  string owner = 11;
+  uint32 status = 12;
+  repeated string targets = 13;
+  repeated string assets = 14;
+}
+
+message ReqArticleAdd{
+  string name = 1;
+  string subtitle = 2;
+  string body = 3;
+  string owner = 4;
+  string operator = 5;
+  repeated string assets = 6;
+  repeated string targets = 7;
+}
+
+message ReqArticleUpdate{
+  string uid = 1;
+  string name = 2;
+  string subtitle = 3;
+  string body = 4;
+  string operator = 5;
+  repeated string assets = 6;
+}
+
+message ReqArticleList {
+  string owner = 1;
+  uint32 type = 2;
+  repeated string targets = 3;
+}
+
+message ReqArticleAssets{
+  string uid = 1;
+  repeated string assets = 2;
+}
+
+message ReqArticleState{
+  string uid = 1;
+  uint32 status = 2;
+}
+
+message ReplyArticleInfo {
+  ReplyStatus status = 1;
+  ArticleInfo info = 2;
+}
+
+message ReplyArticleList {
+  ReplyStatus status = 1;
+  repeated ArticleInfo list = 2;
+}
