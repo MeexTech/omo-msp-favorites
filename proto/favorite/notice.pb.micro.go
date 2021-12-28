@@ -41,6 +41,7 @@ type NoticeService interface {
 	UpdateStatus(ctx context.Context, in *ReqNoticeState, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
+	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type noticeService struct {
@@ -125,6 +126,16 @@ func (c *noticeService) UpdateTargets(ctx context.Context, in *RequestList, opts
 	return out, nil
 }
 
+func (c *noticeService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "NoticeService.RemoveOne", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for NoticeService service
 
 type NoticeServiceHandler interface {
@@ -135,6 +146,7 @@ type NoticeServiceHandler interface {
 	UpdateStatus(context.Context, *ReqNoticeState, *ReplyInfo) error
 	UpdateTags(context.Context, *RequestList, *ReplyInfo) error
 	UpdateTargets(context.Context, *RequestList, *ReplyInfo) error
+	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 }
 
 func RegisterNoticeServiceHandler(s server.Server, hdlr NoticeServiceHandler, opts ...server.HandlerOption) error {
@@ -146,6 +158,7 @@ func RegisterNoticeServiceHandler(s server.Server, hdlr NoticeServiceHandler, op
 		UpdateStatus(ctx context.Context, in *ReqNoticeState, out *ReplyInfo) error
 		UpdateTags(ctx context.Context, in *RequestList, out *ReplyInfo) error
 		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error
+		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 	}
 	type NoticeService struct {
 		noticeService
@@ -184,4 +197,8 @@ func (h *noticeServiceHandler) UpdateTags(ctx context.Context, in *RequestList, 
 
 func (h *noticeServiceHandler) UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error {
 	return h.NoticeServiceHandler.UpdateTargets(ctx, in, out)
+}
+
+func (h *noticeServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
+	return h.NoticeServiceHandler.RemoveOne(ctx, in, out)
 }

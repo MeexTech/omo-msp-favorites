@@ -13,6 +13,7 @@ service ArticleService {
   rpc UpdateStatus(ReqArticleState) returns (ReplyInfo) {}
   rpc UpdateTags(RequestList) returns (ReplyInfo) {}
   rpc UpdateTargets(RequestList) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
 }
 
 message ArticleInfo {
@@ -39,6 +40,7 @@ message ReqArticleAdd{
   string body = 3;
   string owner = 4;
   string operator = 5;
+  repeated string tags = 8;
   repeated string assets = 6;
   repeated string targets = 7;
 }
@@ -49,6 +51,7 @@ message ReqArticleUpdate{
   string subtitle = 3;
   string body = 4;
   string operator = 5;
+  repeated string tags = 7;
   repeated string targets = 6;
 }
 

@@ -42,6 +42,7 @@ type ArticleService interface {
 	UpdateStatus(ctx context.Context, in *ReqArticleState, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
+	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type articleService struct {
@@ -136,6 +137,16 @@ func (c *articleService) UpdateTargets(ctx context.Context, in *RequestList, opt
 	return out, nil
 }
 
+func (c *articleService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ArticleService.RemoveOne", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ArticleService service
 
 type ArticleServiceHandler interface {
@@ -147,6 +158,7 @@ type ArticleServiceHandler interface {
 	UpdateStatus(context.Context, *ReqArticleState, *ReplyInfo) error
 	UpdateTags(context.Context, *RequestList, *ReplyInfo) error
 	UpdateTargets(context.Context, *RequestList, *ReplyInfo) error
+	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 }
 
 func RegisterArticleServiceHandler(s server.Server, hdlr ArticleServiceHandler, opts ...server.HandlerOption) error {
@@ -159,6 +171,7 @@ func RegisterArticleServiceHandler(s server.Server, hdlr ArticleServiceHandler, 
 		UpdateStatus(ctx context.Context, in *ReqArticleState, out *ReplyInfo) error
 		UpdateTags(ctx context.Context, in *RequestList, out *ReplyInfo) error
 		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error
+		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 	}
 	type ArticleService struct {
 		articleService
@@ -201,4 +214,8 @@ func (h *articleServiceHandler) UpdateTags(ctx context.Context, in *RequestList,
 
 func (h *articleServiceHandler) UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error {
 	return h.ArticleServiceHandler.UpdateTargets(ctx, in, out)
+}
+
+func (h *articleServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
+	return h.ArticleServiceHandler.RemoveOne(ctx, in, out)
 }

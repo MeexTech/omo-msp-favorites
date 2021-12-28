@@ -12,6 +12,7 @@ service NoticeService {
   rpc UpdateStatus(ReqNoticeState) returns (ReplyInfo) {}
   rpc UpdateTags(RequestList) returns (ReplyInfo) {}
   rpc UpdateTargets(RequestList) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
 }
 
 message NoticeInfo {
@@ -36,6 +37,7 @@ message ReqNoticeAdd{
   string body = 3;
   string owner = 4;
   string operator = 5;
+  repeated string tags = 7;
   repeated string targets = 6;
 }
 
