@@ -7,10 +7,12 @@ import "proto/favorite/common.proto";
 service ArticleService {
   rpc AddOne(ReqArticleAdd) returns (ReplyArticleInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyArticleInfo) {}
-  rpc GetList(ReqArticleList) returns (ReplyArticleList) {}
+  rpc GetList(RequestFilter) returns (ReplyArticleList) {}
   rpc UpdateBase(ReqArticleUpdate) returns (ReplyArticleInfo) {}
-  rpc UpdateAssets(ReqArticleAssets) returns (ReplyInfo) {}
+  rpc UpdateAssets(RequestList) returns (ReplyInfo) {}
   rpc UpdateStatus(ReqArticleState) returns (ReplyInfo) {}
+  rpc UpdateTags(RequestList) returns (ReplyInfo) {}
+  rpc UpdateTargets(RequestList) returns (ReplyInfo) {}
 }
 
 message ArticleInfo {
@@ -28,6 +30,7 @@ message ArticleInfo {
   uint32 status = 12;
   repeated string targets = 13;
   repeated string assets = 14;
+  repeated string tags = 15;
 }
 
 message ReqArticleAdd{
@@ -49,20 +52,10 @@ message ReqArticleUpdate{
   repeated string targets = 6;
 }
 
-message ReqArticleList {
-  string owner = 1;
-  uint32 type = 2;
-  repeated string targets = 3;
-}
-
-message ReqArticleAssets{
-  string uid = 1;
-  repeated string assets = 2;
-}
-
 message ReqArticleState{
   string uid = 1;
   uint32 status = 2;
+  string operator = 3;
 }
 
 message ReplyArticleInfo {

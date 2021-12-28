@@ -36,9 +36,11 @@ var _ server.Option
 type NoticeService interface {
 	AddOne(ctx context.Context, in *ReqNoticeAdd, opts ...client.CallOption) (*ReplyNoticeInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyNoticeInfo, error)
-	GetList(ctx context.Context, in *ReqNoticeList, opts ...client.CallOption) (*ReplyNoticeList, error)
+	GetList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyNoticeList, error)
 	UpdateBase(ctx context.Context, in *ReqNoticeUpdate, opts ...client.CallOption) (*ReplyNoticeInfo, error)
 	UpdateStatus(ctx context.Context, in *ReqNoticeState, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type noticeService struct {
@@ -73,7 +75,7 @@ func (c *noticeService) GetOne(ctx context.Context, in *RequestInfo, opts ...cli
 	return out, nil
 }
 
-func (c *noticeService) GetList(ctx context.Context, in *ReqNoticeList, opts ...client.CallOption) (*ReplyNoticeList, error) {
+func (c *noticeService) GetList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyNoticeList, error) {
 	req := c.c.NewRequest(c.name, "NoticeService.GetList", in)
 	out := new(ReplyNoticeList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -103,23 +105,47 @@ func (c *noticeService) UpdateStatus(ctx context.Context, in *ReqNoticeState, op
 	return out, nil
 }
 
+func (c *noticeService) UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "NoticeService.UpdateTags", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *noticeService) UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "NoticeService.UpdateTargets", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for NoticeService service
 
 type NoticeServiceHandler interface {
 	AddOne(context.Context, *ReqNoticeAdd, *ReplyNoticeInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyNoticeInfo) error
-	GetList(context.Context, *ReqNoticeList, *ReplyNoticeList) error
+	GetList(context.Context, *RequestFilter, *ReplyNoticeList) error
 	UpdateBase(context.Context, *ReqNoticeUpdate, *ReplyNoticeInfo) error
 	UpdateStatus(context.Context, *ReqNoticeState, *ReplyInfo) error
+	UpdateTags(context.Context, *RequestList, *ReplyInfo) error
+	UpdateTargets(context.Context, *RequestList, *ReplyInfo) error
 }
 
 func RegisterNoticeServiceHandler(s server.Server, hdlr NoticeServiceHandler, opts ...server.HandlerOption) error {
 	type noticeService interface {
 		AddOne(ctx context.Context, in *ReqNoticeAdd, out *ReplyNoticeInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyNoticeInfo) error
-		GetList(ctx context.Context, in *ReqNoticeList, out *ReplyNoticeList) error
+		GetList(ctx context.Context, in *RequestFilter, out *ReplyNoticeList) error
 		UpdateBase(ctx context.Context, in *ReqNoticeUpdate, out *ReplyNoticeInfo) error
 		UpdateStatus(ctx context.Context, in *ReqNoticeState, out *ReplyInfo) error
+		UpdateTags(ctx context.Context, in *RequestList, out *ReplyInfo) error
+		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error
 	}
 	type NoticeService struct {
 		noticeService
@@ -140,7 +166,7 @@ func (h *noticeServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out 
 	return h.NoticeServiceHandler.GetOne(ctx, in, out)
 }
 
-func (h *noticeServiceHandler) GetList(ctx context.Context, in *ReqNoticeList, out *ReplyNoticeList) error {
+func (h *noticeServiceHandler) GetList(ctx context.Context, in *RequestFilter, out *ReplyNoticeList) error {
 	return h.NoticeServiceHandler.GetList(ctx, in, out)
 }
 
@@ -150,4 +176,12 @@ func (h *noticeServiceHandler) UpdateBase(ctx context.Context, in *ReqNoticeUpda
 
 func (h *noticeServiceHandler) UpdateStatus(ctx context.Context, in *ReqNoticeState, out *ReplyInfo) error {
 	return h.NoticeServiceHandler.UpdateStatus(ctx, in, out)
+}
+
+func (h *noticeServiceHandler) UpdateTags(ctx context.Context, in *RequestList, out *ReplyInfo) error {
+	return h.NoticeServiceHandler.UpdateTags(ctx, in, out)
+}
+
+func (h *noticeServiceHandler) UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error {
+	return h.NoticeServiceHandler.UpdateTargets(ctx, in, out)
 }

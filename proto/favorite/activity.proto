@@ -8,6 +8,7 @@ service ActivityService {
   rpc AddOne(ReqActivityAdd) returns (ReplyActivityInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyActivityInfo) {}
   rpc GetList(RequestInfo) returns (ReplyActivityList) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyActivityList) {}
   rpc UpdateBase(ReqActivityUpdate) returns (ReplyActivityInfo) {}
   rpc UpdateTags(RequestList) returns (ReplyList) {}
   rpc UpdateAssets(RequestList) returns (ReplyList) {}

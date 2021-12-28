@@ -10,6 +10,7 @@ service FavoriteService {
     rpc GetByOrigin(RequestInfo) returns (ReplyFavoriteInfo) {}
     rpc GetList(ReqFavoriteList) returns (ReplyFavoriteList) {}
     rpc GetByList(RequestList) returns (ReplyFavoriteList) {}
+    rpc GetByFilter(RequestFilter) returns (ReplyFavoriteList) {}
     rpc UpdateBase(ReqFavoriteUpdate) returns (ReplyFavoriteInfo) {}
     rpc UpdateMeta(ReqFavoriteMeta) returns (ReplyFavoriteInfo) {}
     rpc UpdateTags(ReqFavoriteTags) returns (ReplyFavoriteInfo) {}

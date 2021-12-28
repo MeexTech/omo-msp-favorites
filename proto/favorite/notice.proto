@@ -7,15 +7,16 @@ import "proto/favorite/common.proto";
 service NoticeService {
   rpc AddOne(ReqNoticeAdd) returns (ReplyNoticeInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyNoticeInfo) {}
-  rpc GetList(ReqNoticeList) returns (ReplyNoticeList) {}
+  rpc GetList(RequestFilter) returns (ReplyNoticeList) {}
   rpc UpdateBase(ReqNoticeUpdate) returns (ReplyNoticeInfo) {}
   rpc UpdateStatus(ReqNoticeState) returns (ReplyInfo) {}
+  rpc UpdateTags(RequestList) returns (ReplyInfo) {}
+  rpc UpdateTargets(RequestList) returns (ReplyInfo) {}
 }
 
 message NoticeInfo {
   string uid = 1;
   uint64 id = 2;
-  uint32 type = 3;
   int64 created = 4;
   int64 updated = 5;
   string creator = 6;
@@ -26,6 +27,7 @@ message NoticeInfo {
   string owner = 11;
   uint32 status = 12;
   repeated string targets = 13;
+  repeated string tags = 14;
 }
 
 message ReqNoticeAdd{
@@ -46,15 +48,10 @@ message ReqNoticeUpdate{
   repeated string targets = 6;
 }
 
-message ReqNoticeList {
-  string owner = 1;
-  uint32 type = 2;
-  repeated string targets = 3;
-}
-
 message ReqNoticeState{
   string uid = 1;
   uint32 status = 2;
+  string operator = 3;
 }
 
 message ReplyNoticeInfo {

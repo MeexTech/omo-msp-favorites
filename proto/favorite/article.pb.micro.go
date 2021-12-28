@@ -36,10 +36,12 @@ var _ server.Option
 type ArticleService interface {
 	AddOne(ctx context.Context, in *ReqArticleAdd, opts ...client.CallOption) (*ReplyArticleInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyArticleInfo, error)
-	GetList(ctx context.Context, in *ReqArticleList, opts ...client.CallOption) (*ReplyArticleList, error)
+	GetList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyArticleList, error)
 	UpdateBase(ctx context.Context, in *ReqArticleUpdate, opts ...client.CallOption) (*ReplyArticleInfo, error)
-	UpdateAssets(ctx context.Context, in *ReqArticleAssets, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateStatus(ctx context.Context, in *ReqArticleState, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type articleService struct {
@@ -74,7 +76,7 @@ func (c *articleService) GetOne(ctx context.Context, in *RequestInfo, opts ...cl
 	return out, nil
 }
 
-func (c *articleService) GetList(ctx context.Context, in *ReqArticleList, opts ...client.CallOption) (*ReplyArticleList, error) {
+func (c *articleService) GetList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyArticleList, error) {
 	req := c.c.NewRequest(c.name, "ArticleService.GetList", in)
 	out := new(ReplyArticleList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -94,7 +96,7 @@ func (c *articleService) UpdateBase(ctx context.Context, in *ReqArticleUpdate, o
 	return out, nil
 }
 
-func (c *articleService) UpdateAssets(ctx context.Context, in *ReqArticleAssets, opts ...client.CallOption) (*ReplyInfo, error) {
+func (c *articleService) UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "ArticleService.UpdateAssets", in)
 	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -114,25 +116,49 @@ func (c *articleService) UpdateStatus(ctx context.Context, in *ReqArticleState, 
 	return out, nil
 }
 
+func (c *articleService) UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ArticleService.UpdateTags", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleService) UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ArticleService.UpdateTargets", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ArticleService service
 
 type ArticleServiceHandler interface {
 	AddOne(context.Context, *ReqArticleAdd, *ReplyArticleInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyArticleInfo) error
-	GetList(context.Context, *ReqArticleList, *ReplyArticleList) error
+	GetList(context.Context, *RequestFilter, *ReplyArticleList) error
 	UpdateBase(context.Context, *ReqArticleUpdate, *ReplyArticleInfo) error
-	UpdateAssets(context.Context, *ReqArticleAssets, *ReplyInfo) error
+	UpdateAssets(context.Context, *RequestList, *ReplyInfo) error
 	UpdateStatus(context.Context, *ReqArticleState, *ReplyInfo) error
+	UpdateTags(context.Context, *RequestList, *ReplyInfo) error
+	UpdateTargets(context.Context, *RequestList, *ReplyInfo) error
 }
 
 func RegisterArticleServiceHandler(s server.Server, hdlr ArticleServiceHandler, opts ...server.HandlerOption) error {
 	type articleService interface {
 		AddOne(ctx context.Context, in *ReqArticleAdd, out *ReplyArticleInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyArticleInfo) error
-		GetList(ctx context.Context, in *ReqArticleList, out *ReplyArticleList) error
+		GetList(ctx context.Context, in *RequestFilter, out *ReplyArticleList) error
 		UpdateBase(ctx context.Context, in *ReqArticleUpdate, out *ReplyArticleInfo) error
-		UpdateAssets(ctx context.Context, in *ReqArticleAssets, out *ReplyInfo) error
+		UpdateAssets(ctx context.Context, in *RequestList, out *ReplyInfo) error
 		UpdateStatus(ctx context.Context, in *ReqArticleState, out *ReplyInfo) error
+		UpdateTags(ctx context.Context, in *RequestList, out *ReplyInfo) error
+		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error
 	}
 	type ArticleService struct {
 		articleService
@@ -153,7 +179,7 @@ func (h *articleServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out
 	return h.ArticleServiceHandler.GetOne(ctx, in, out)
 }
 
-func (h *articleServiceHandler) GetList(ctx context.Context, in *ReqArticleList, out *ReplyArticleList) error {
+func (h *articleServiceHandler) GetList(ctx context.Context, in *RequestFilter, out *ReplyArticleList) error {
 	return h.ArticleServiceHandler.GetList(ctx, in, out)
 }
 
@@ -161,10 +187,18 @@ func (h *articleServiceHandler) UpdateBase(ctx context.Context, in *ReqArticleUp
 	return h.ArticleServiceHandler.UpdateBase(ctx, in, out)
 }
 
-func (h *articleServiceHandler) UpdateAssets(ctx context.Context, in *ReqArticleAssets, out *ReplyInfo) error {
+func (h *articleServiceHandler) UpdateAssets(ctx context.Context, in *RequestList, out *ReplyInfo) error {
 	return h.ArticleServiceHandler.UpdateAssets(ctx, in, out)
 }
 
 func (h *articleServiceHandler) UpdateStatus(ctx context.Context, in *ReqArticleState, out *ReplyInfo) error {
 	return h.ArticleServiceHandler.UpdateStatus(ctx, in, out)
+}
+
+func (h *articleServiceHandler) UpdateTags(ctx context.Context, in *RequestList, out *ReplyInfo) error {
+	return h.ArticleServiceHandler.UpdateTags(ctx, in, out)
+}
+
+func (h *articleServiceHandler) UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error {
+	return h.ArticleServiceHandler.UpdateTargets(ctx, in, out)
 }
