@@ -99,7 +99,11 @@ message ReplyFavoriteInfo {
 
 message ReplyFavoriteList {
     ReplyStatus status = 1;
-    repeated FavoriteInfo list = 2;
+    uint32 total = 2;
+    uint32 pages = 3;
+    uint32 page = 4;
+    uint32 number = 5;
+    repeated FavoriteInfo list = 6;
 }
 
 message ReqFavoriteKeys {

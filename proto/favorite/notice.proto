@@ -63,5 +63,9 @@ message ReplyNoticeInfo {
 
 message ReplyNoticeList {
   ReplyStatus status = 1;
-  repeated NoticeInfo list = 2;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated NoticeInfo list = 6;
 }

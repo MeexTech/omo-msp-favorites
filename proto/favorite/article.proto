@@ -68,5 +68,9 @@ message ReplyArticleInfo {
 
 message ReplyArticleList {
   ReplyStatus status = 1;
-  repeated ArticleInfo list = 2;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated ArticleInfo list = 6;
 }

@@ -44,7 +44,10 @@ message RequestFilter {
   string owner = 1;
   string key = 2;
   string value = 3;
-  repeated string list = 4;
+  uint32 page = 4;
+  uint32 number = 5;
+  bool person = 6;
+  repeated string list = 7;
 }
 
 message ReplyStatus {

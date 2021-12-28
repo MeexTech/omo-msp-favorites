@@ -79,7 +79,11 @@ message ReplyActivityInfo {
 
 message ReplyActivityList {
   ReplyStatus status = 1;
-  repeated ActivityInfo list = 2;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated ActivityInfo list = 6;
 }
 
 message ReplyPairList {
