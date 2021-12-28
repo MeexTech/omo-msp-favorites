@@ -41,9 +41,10 @@ message RequestInfo {
 }
 
 message RequestFilter {
-  string key = 1;
-  string value = 2;
-  repeated string list = 3;
+  string owner = 1;
+  string key = 2;
+  string value = 3;
+  repeated string list = 4;
 }
 
 message ReplyStatus {
