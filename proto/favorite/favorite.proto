@@ -19,6 +19,7 @@ service FavoriteService {
     rpc UpdateKeys(ReqFavoriteKeys) returns (ReplyFavoriteKeys) {}
     rpc AppendKey(RequestInfo) returns (ReplyFavoriteKeys){}
     rpc SubtractKey(RequestInfo) returns (ReplyFavoriteKeys){}
+    rpc UpdateTarget(ReqFavoriteTarget) returns (ReplyFavoriteTargets){}
     rpc AppendTarget(ReqFavoriteTarget) returns (ReplyFavoriteTargets){}
     rpc SubtractTarget(ReqFavoriteTarget) returns (ReplyFavoriteTargets){}
 }
@@ -107,7 +108,9 @@ message ReqFavoriteTarget{
     string target = 2;
     string effect = 3;
     string skin = 4;
-    repeated string slots = 5;
+    string uid = 5;
+    bool person = 6;
+    repeated string slots = 7;
 }
 
 message ReplyFavoriteInfo {

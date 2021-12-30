@@ -48,6 +48,7 @@ type FavoriteService interface {
 	UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
 	AppendKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
 	SubtractKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
+	UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
 	AppendTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
 	SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
 }
@@ -204,6 +205,16 @@ func (c *favoriteService) SubtractKey(ctx context.Context, in *RequestInfo, opts
 	return out, nil
 }
 
+func (c *favoriteService) UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.UpdateTarget", in)
+	out := new(ReplyFavoriteTargets)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *favoriteService) AppendTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.AppendTarget", in)
 	out := new(ReplyFavoriteTargets)
@@ -241,6 +252,7 @@ type FavoriteServiceHandler interface {
 	UpdateKeys(context.Context, *ReqFavoriteKeys, *ReplyFavoriteKeys) error
 	AppendKey(context.Context, *RequestInfo, *ReplyFavoriteKeys) error
 	SubtractKey(context.Context, *RequestInfo, *ReplyFavoriteKeys) error
+	UpdateTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
 	AppendTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
 	SubtractTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
 }
@@ -261,6 +273,7 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 		UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, out *ReplyFavoriteKeys) error
 		AppendKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error
 		SubtractKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error
+		UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
 		AppendTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
 		SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
 	}
@@ -329,6 +342,10 @@ func (h *favoriteServiceHandler) AppendKey(ctx context.Context, in *RequestInfo,
 
 func (h *favoriteServiceHandler) SubtractKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error {
 	return h.FavoriteServiceHandler.SubtractKey(ctx, in, out)
+}
+
+func (h *favoriteServiceHandler) UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error {
+	return h.FavoriteServiceHandler.UpdateTarget(ctx, in, out)
 }
 
 func (h *favoriteServiceHandler) AppendTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error {
