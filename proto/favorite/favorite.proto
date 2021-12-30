@@ -17,8 +17,10 @@ service FavoriteService {
     rpc UpdateStatus(ReqFavoriteState) returns (ReplyInfo) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
     rpc UpdateKeys(ReqFavoriteKeys) returns (ReplyFavoriteKeys) {}
-    rpc AppendEntity(RequestInfo) returns (ReplyFavoriteKeys){}
-    rpc SubtractEntity(RequestInfo) returns (ReplyFavoriteKeys){}
+    rpc AppendKey(RequestInfo) returns (ReplyFavoriteKeys){}
+    rpc SubtractKey(RequestInfo) returns (ReplyFavoriteKeys){}
+    rpc AppendTarget(ReqFavoriteTarget) returns (ReplyFavoriteTargets){}
+    rpc SubtractTarget(ReqFavoriteTarget) returns (ReplyFavoriteTargets){}
 }
 
 message FavoriteInfo {
@@ -38,6 +40,14 @@ message FavoriteInfo {
     uint32 status = 14;
     repeated string tags = 15;
     repeated string keys = 16;
+    repeated ShowInfo targets = 17;
+}
+
+message ShowInfo {
+     string target = 1;
+     string effect = 2;
+     string  skin = 3;
+     repeated string slots = 4;
 }
 
 message ReqFavoriteAdd {
@@ -92,6 +102,14 @@ message ReqFavoriteMeta{
     string meta = 4;
 }
 
+message ReqFavoriteTarget{
+    string operator = 1;
+    string target = 2;
+    string effect = 3;
+    string skin = 4;
+    repeated string slots = 5;
+}
+
 message ReplyFavoriteInfo {
     FavoriteInfo info = 1;
     ReplyStatus status = 2;
@@ -117,4 +135,11 @@ message ReplyFavoriteKeys {
     string uid = 1;
     repeated string keys = 2;
     ReplyStatus status = 3;
+}
+
+message ReplyFavoriteTargets {
+    string uid = 1;
+    ReplyStatus status = 2;
+    repeated ShowInfo targets = 3;
+
 }

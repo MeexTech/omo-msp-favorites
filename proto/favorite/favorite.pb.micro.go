@@ -46,8 +46,10 @@ type FavoriteService interface {
 	UpdateStatus(ctx context.Context, in *ReqFavoriteState, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
-	AppendEntity(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
-	SubtractEntity(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
+	AppendKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
+	SubtractKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
+	AppendTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
+	SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
 }
 
 type favoriteService struct {
@@ -182,8 +184,8 @@ func (c *favoriteService) UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, o
 	return out, nil
 }
 
-func (c *favoriteService) AppendEntity(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.AppendEntity", in)
+func (c *favoriteService) AppendKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.AppendKey", in)
 	out := new(ReplyFavoriteKeys)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -192,9 +194,29 @@ func (c *favoriteService) AppendEntity(ctx context.Context, in *RequestInfo, opt
 	return out, nil
 }
 
-func (c *favoriteService) SubtractEntity(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.SubtractEntity", in)
+func (c *favoriteService) SubtractKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.SubtractKey", in)
 	out := new(ReplyFavoriteKeys)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *favoriteService) AppendTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.AppendTarget", in)
+	out := new(ReplyFavoriteTargets)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *favoriteService) SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.SubtractTarget", in)
+	out := new(ReplyFavoriteTargets)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -217,8 +239,10 @@ type FavoriteServiceHandler interface {
 	UpdateStatus(context.Context, *ReqFavoriteState, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	UpdateKeys(context.Context, *ReqFavoriteKeys, *ReplyFavoriteKeys) error
-	AppendEntity(context.Context, *RequestInfo, *ReplyFavoriteKeys) error
-	SubtractEntity(context.Context, *RequestInfo, *ReplyFavoriteKeys) error
+	AppendKey(context.Context, *RequestInfo, *ReplyFavoriteKeys) error
+	SubtractKey(context.Context, *RequestInfo, *ReplyFavoriteKeys) error
+	AppendTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
+	SubtractTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
 }
 
 func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler, opts ...server.HandlerOption) error {
@@ -235,8 +259,10 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 		UpdateStatus(ctx context.Context, in *ReqFavoriteState, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, out *ReplyFavoriteKeys) error
-		AppendEntity(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error
-		SubtractEntity(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error
+		AppendKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error
+		SubtractKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error
+		AppendTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
+		SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
 	}
 	type FavoriteService struct {
 		favoriteService
@@ -297,10 +323,18 @@ func (h *favoriteServiceHandler) UpdateKeys(ctx context.Context, in *ReqFavorite
 	return h.FavoriteServiceHandler.UpdateKeys(ctx, in, out)
 }
 
-func (h *favoriteServiceHandler) AppendEntity(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error {
-	return h.FavoriteServiceHandler.AppendEntity(ctx, in, out)
+func (h *favoriteServiceHandler) AppendKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error {
+	return h.FavoriteServiceHandler.AppendKey(ctx, in, out)
 }
 
-func (h *favoriteServiceHandler) SubtractEntity(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error {
-	return h.FavoriteServiceHandler.SubtractEntity(ctx, in, out)
+func (h *favoriteServiceHandler) SubtractKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error {
+	return h.FavoriteServiceHandler.SubtractKey(ctx, in, out)
+}
+
+func (h *favoriteServiceHandler) AppendTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error {
+	return h.FavoriteServiceHandler.AppendTarget(ctx, in, out)
+}
+
+func (h *favoriteServiceHandler) SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error {
+	return h.FavoriteServiceHandler.SubtractTarget(ctx, in, out)
 }
