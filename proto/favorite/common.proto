@@ -3,15 +3,6 @@ syntax = "proto3";
 package omo.msp.favorite;
 option go_package= "proto/favorite";
 
-enum ResultStatus {
-  Success = 0;
-  MaxLimit = 1;
-  Repeated = 2;
-  NotExisted = 3;
-  DBException = 4;
-  Empty = 5;
-}
-
 enum ActivityType {
   Gather = 0;  //采集
   SignUp = 1;  //报道

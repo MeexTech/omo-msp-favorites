@@ -13,6 +13,7 @@ service ActivityService {
   rpc UpdateTags(RequestList) returns (ReplyList) {}
   rpc UpdateAssets(RequestList) returns (ReplyList) {}
   rpc UpdateTargets(RequestList) returns (ReplyList) {}
+  rpc UpdateStatus(ReqActivityState) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc AppendOne(RequestInfo) returns (ReplyPairList){}
   rpc SubtractOne(RequestInfo) returns (ReplyPairList){}
@@ -35,10 +36,11 @@ message ActivityInfo {
   PlaceInfo place = 14;
   string organizer = 15;
   uint32 limit = 16;
-  repeated string tags = 17;
-  repeated string assets = 18;
-  repeated PairInfo participants = 19;
-  repeated string targets = 20;
+  uint32 status = 17;
+  repeated string tags = 18;
+  repeated string assets = 19;
+  repeated PairInfo participants = 20;
+  repeated string targets = 21;
 }
 
 message ReqActivityAdd {
@@ -70,6 +72,12 @@ message ReqActivityUpdate {
   string organizer = 8;
   string require = 9;
   uint32 limit = 10;
+}
+
+message ReqActivityState{
+  string uid = 1;
+  string operator = 2;
+  uint32 status = 3;
 }
 
 message ReplyActivityInfo {
