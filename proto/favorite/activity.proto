@@ -14,9 +14,12 @@ service ActivityService {
   rpc UpdateAssets(RequestList) returns (ReplyList) {}
   rpc UpdateTargets(RequestList) returns (ReplyList) {}
   rpc UpdateStatus(ReqActivityState) returns (ReplyInfo) {}
+  rpc UpdateShow(ReqActivityState) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc AppendOne(RequestInfo) returns (ReplyPairList){}
   rpc SubtractOne(RequestInfo) returns (ReplyPairList){}
+  rpc UpdateOpuses(ReqActivityOpus) returns (ReplyInfo){}
+  rpc UpdatePrize(ReqActivityPrize) returns (ReplyInfo){}
 }
 
 message ActivityInfo {
@@ -37,10 +40,31 @@ message ActivityInfo {
   string organizer = 15;
   uint32 limit = 16;
   uint32 status = 17;
-  repeated string tags = 18;
-  repeated string assets = 19;
-  repeated PairInfo participants = 20;
-  repeated string targets = 21;
+  uint32 show = 18;
+  PrizeInfo prize =19;
+  repeated string tags = 20;
+  repeated string assets = 21;
+  repeated string targets = 22;
+  repeated PairInfo participants = 23;
+  repeated OpusInfo opuses = 24;
+}
+
+message PrizeInfo {
+  string name = 1;
+  string desc = 2;
+  repeated RankInfo ranks = 3;
+}
+
+message RankInfo {
+  uint32 index = 1;
+  string name = 2;
+  uint32 count = 3;
+}
+
+message OpusInfo {
+  uint32 rank = 1;
+  string asset = 2;
+  string remark = 3;
 }
 
 message ReqActivityAdd {
@@ -55,10 +79,12 @@ message ReqActivityAdd {
   string organizer = 9;
   string require = 10;
   uint32 limit = 11;
-  repeated string assets = 12;
-  repeated string tags = 13;
-  repeated string participants = 14;
-  repeated string targets = 15;
+  uint32 show = 12;
+  PrizeInfo prize = 13;
+  repeated string assets = 14;
+  repeated string tags = 15;
+  repeated string participants = 16;
+  repeated string targets = 17;
 }
 
 message ReqActivityUpdate {
@@ -72,6 +98,22 @@ message ReqActivityUpdate {
   string organizer = 8;
   string require = 9;
   uint32 limit = 10;
+}
+
+message ReqActivityPrize {
+  string uid = 1;
+  string name = 2;
+  string desc = 3;
+  string operator = 4;
+  repeated RankInfo ranks = 5;
+}
+
+message ReqActivityOpus {
+  string uid = 1;
+  uint32 rank = 2;
+  string asset = 3;
+  string remark = 4;
+  string operator = 5;
 }
 
 message ReqActivityState{
@@ -98,3 +140,4 @@ message ReplyPairList {
   ReplyStatus status = 1;
   repeated PairInfo list = 2;
 }
+

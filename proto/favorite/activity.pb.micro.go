@@ -43,9 +43,12 @@ type ActivityService interface {
 	UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	UpdateStatus(ctx context.Context, in *ReqActivityState, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateShow(ctx context.Context, in *ReqActivityState, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	AppendOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
 	SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
+	UpdateOpuses(ctx context.Context, in *ReqActivityOpus, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdatePrize(ctx context.Context, in *ReqActivityPrize, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type activityService struct {
@@ -150,6 +153,16 @@ func (c *activityService) UpdateStatus(ctx context.Context, in *ReqActivityState
 	return out, nil
 }
 
+func (c *activityService) UpdateShow(ctx context.Context, in *ReqActivityState, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ActivityService.UpdateShow", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *activityService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "ActivityService.RemoveOne", in)
 	out := new(ReplyInfo)
@@ -180,6 +193,26 @@ func (c *activityService) SubtractOne(ctx context.Context, in *RequestInfo, opts
 	return out, nil
 }
 
+func (c *activityService) UpdateOpuses(ctx context.Context, in *ReqActivityOpus, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ActivityService.UpdateOpuses", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityService) UpdatePrize(ctx context.Context, in *ReqActivityPrize, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ActivityService.UpdatePrize", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ActivityService service
 
 type ActivityServiceHandler interface {
@@ -192,9 +225,12 @@ type ActivityServiceHandler interface {
 	UpdateAssets(context.Context, *RequestList, *ReplyList) error
 	UpdateTargets(context.Context, *RequestList, *ReplyList) error
 	UpdateStatus(context.Context, *ReqActivityState, *ReplyInfo) error
+	UpdateShow(context.Context, *ReqActivityState, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	AppendOne(context.Context, *RequestInfo, *ReplyPairList) error
 	SubtractOne(context.Context, *RequestInfo, *ReplyPairList) error
+	UpdateOpuses(context.Context, *ReqActivityOpus, *ReplyInfo) error
+	UpdatePrize(context.Context, *ReqActivityPrize, *ReplyInfo) error
 }
 
 func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler, opts ...server.HandlerOption) error {
@@ -208,9 +244,12 @@ func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler
 		UpdateAssets(ctx context.Context, in *RequestList, out *ReplyList) error
 		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyList) error
 		UpdateStatus(ctx context.Context, in *ReqActivityState, out *ReplyInfo) error
+		UpdateShow(ctx context.Context, in *ReqActivityState, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		AppendOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
 		SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
+		UpdateOpuses(ctx context.Context, in *ReqActivityOpus, out *ReplyInfo) error
+		UpdatePrize(ctx context.Context, in *ReqActivityPrize, out *ReplyInfo) error
 	}
 	type ActivityService struct {
 		activityService
@@ -259,6 +298,10 @@ func (h *activityServiceHandler) UpdateStatus(ctx context.Context, in *ReqActivi
 	return h.ActivityServiceHandler.UpdateStatus(ctx, in, out)
 }
 
+func (h *activityServiceHandler) UpdateShow(ctx context.Context, in *ReqActivityState, out *ReplyInfo) error {
+	return h.ActivityServiceHandler.UpdateShow(ctx, in, out)
+}
+
 func (h *activityServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
 	return h.ActivityServiceHandler.RemoveOne(ctx, in, out)
 }
@@ -269,4 +312,12 @@ func (h *activityServiceHandler) AppendOne(ctx context.Context, in *RequestInfo,
 
 func (h *activityServiceHandler) SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error {
 	return h.ActivityServiceHandler.SubtractOne(ctx, in, out)
+}
+
+func (h *activityServiceHandler) UpdateOpuses(ctx context.Context, in *ReqActivityOpus, out *ReplyInfo) error {
+	return h.ActivityServiceHandler.UpdateOpuses(ctx, in, out)
+}
+
+func (h *activityServiceHandler) UpdatePrize(ctx context.Context, in *ReqActivityPrize, out *ReplyInfo) error {
+	return h.ActivityServiceHandler.UpdatePrize(ctx, in, out)
 }
