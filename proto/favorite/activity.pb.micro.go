@@ -47,7 +47,7 @@ type ActivityService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	AppendOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
 	SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
-	UpdateOpuses(ctx context.Context, in *ReqActivityOpus, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateOpuses(ctx context.Context, in *ReqActivityOpuses, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdatePrize(ctx context.Context, in *ReqActivityPrize, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
@@ -193,7 +193,7 @@ func (c *activityService) SubtractOne(ctx context.Context, in *RequestInfo, opts
 	return out, nil
 }
 
-func (c *activityService) UpdateOpuses(ctx context.Context, in *ReqActivityOpus, opts ...client.CallOption) (*ReplyInfo, error) {
+func (c *activityService) UpdateOpuses(ctx context.Context, in *ReqActivityOpuses, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "ActivityService.UpdateOpuses", in)
 	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -229,7 +229,7 @@ type ActivityServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	AppendOne(context.Context, *RequestInfo, *ReplyPairList) error
 	SubtractOne(context.Context, *RequestInfo, *ReplyPairList) error
-	UpdateOpuses(context.Context, *ReqActivityOpus, *ReplyInfo) error
+	UpdateOpuses(context.Context, *ReqActivityOpuses, *ReplyInfo) error
 	UpdatePrize(context.Context, *ReqActivityPrize, *ReplyInfo) error
 }
 
@@ -248,7 +248,7 @@ func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		AppendOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
 		SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
-		UpdateOpuses(ctx context.Context, in *ReqActivityOpus, out *ReplyInfo) error
+		UpdateOpuses(ctx context.Context, in *ReqActivityOpuses, out *ReplyInfo) error
 		UpdatePrize(ctx context.Context, in *ReqActivityPrize, out *ReplyInfo) error
 	}
 	type ActivityService struct {
@@ -314,7 +314,7 @@ func (h *activityServiceHandler) SubtractOne(ctx context.Context, in *RequestInf
 	return h.ActivityServiceHandler.SubtractOne(ctx, in, out)
 }
 
-func (h *activityServiceHandler) UpdateOpuses(ctx context.Context, in *ReqActivityOpus, out *ReplyInfo) error {
+func (h *activityServiceHandler) UpdateOpuses(ctx context.Context, in *ReqActivityOpuses, out *ReplyInfo) error {
 	return h.ActivityServiceHandler.UpdateOpuses(ctx, in, out)
 }
 
