@@ -41,6 +41,7 @@ message ActivityInfo {
   uint32 limit = 16;
   uint32 status = 17;
   uint32 show = 18;
+  string template = 25;
   PrizeInfo prize =19;
   repeated string tags = 20;
   repeated string assets = 21;
@@ -80,10 +81,10 @@ message ReqActivityAdd {
   string require = 10;
   uint32 limit = 11;
   uint32 show = 12;
-  PrizeInfo prize = 13;
-  repeated string assets = 14;
-  repeated string tags = 15;
-  repeated string participants = 16;
+  string template = 13;
+  PrizeInfo prize = 14;
+  repeated string assets = 15;
+  repeated string tags = 16;
   repeated string targets = 17;
 }
 
