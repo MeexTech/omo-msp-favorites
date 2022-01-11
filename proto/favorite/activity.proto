@@ -83,9 +83,10 @@ message ReqActivityAdd {
   uint32 show = 12;
   string template = 13;
   PrizeInfo prize = 14;
-  repeated string assets = 15;
-  repeated string tags = 16;
-  repeated string targets = 17;
+  uint32 status = 15;
+  repeated string assets = 16;
+  repeated string tags = 17;
+  repeated string targets = 18;
 }
 
 message ReqActivityUpdate {
