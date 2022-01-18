@@ -40,6 +40,7 @@ type FavoriteService interface {
 	GetList(ctx context.Context, in *ReqFavoriteList, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	GetByList(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyFavoriteList, error)
+	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	UpdateMeta(ctx context.Context, in *ReqFavoriteMeta, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	UpdateTags(ctx context.Context, in *ReqFavoriteTags, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
@@ -118,6 +119,16 @@ func (c *favoriteService) GetByList(ctx context.Context, in *RequestList, opts .
 func (c *favoriteService) GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyFavoriteList, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.GetByFilter", in)
 	out := new(ReplyFavoriteList)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *favoriteService) GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.GetStatistic", in)
+	out := new(ReplyStatistic)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -244,6 +255,7 @@ type FavoriteServiceHandler interface {
 	GetList(context.Context, *ReqFavoriteList, *ReplyFavoriteList) error
 	GetByList(context.Context, *RequestList, *ReplyFavoriteList) error
 	GetByFilter(context.Context, *RequestFilter, *ReplyFavoriteList) error
+	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateBase(context.Context, *ReqFavoriteUpdate, *ReplyFavoriteInfo) error
 	UpdateMeta(context.Context, *ReqFavoriteMeta, *ReplyFavoriteInfo) error
 	UpdateTags(context.Context, *ReqFavoriteTags, *ReplyFavoriteInfo) error
@@ -265,6 +277,7 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 		GetList(ctx context.Context, in *ReqFavoriteList, out *ReplyFavoriteList) error
 		GetByList(ctx context.Context, in *RequestList, out *ReplyFavoriteList) error
 		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyFavoriteList) error
+		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error
 		UpdateMeta(ctx context.Context, in *ReqFavoriteMeta, out *ReplyFavoriteInfo) error
 		UpdateTags(ctx context.Context, in *ReqFavoriteTags, out *ReplyFavoriteInfo) error
@@ -310,6 +323,10 @@ func (h *favoriteServiceHandler) GetByList(ctx context.Context, in *RequestList,
 
 func (h *favoriteServiceHandler) GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyFavoriteList) error {
 	return h.FavoriteServiceHandler.GetByFilter(ctx, in, out)
+}
+
+func (h *favoriteServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error {
+	return h.FavoriteServiceHandler.GetStatistic(ctx, in, out)
 }
 
 func (h *favoriteServiceHandler) UpdateBase(ctx context.Context, in *ReqFavoriteUpdate, out *ReplyFavoriteInfo) error {

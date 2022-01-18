@@ -37,6 +37,7 @@ type ArticleService interface {
 	AddOne(ctx context.Context, in *ReqArticleAdd, opts ...client.CallOption) (*ReplyArticleInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyArticleInfo, error)
 	GetList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyArticleList, error)
+	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateBase(ctx context.Context, in *ReqArticleUpdate, opts ...client.CallOption) (*ReplyArticleInfo, error)
 	UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateStatus(ctx context.Context, in *ReqArticleState, opts ...client.CallOption) (*ReplyInfo, error)
@@ -80,6 +81,16 @@ func (c *articleService) GetOne(ctx context.Context, in *RequestInfo, opts ...cl
 func (c *articleService) GetList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyArticleList, error) {
 	req := c.c.NewRequest(c.name, "ArticleService.GetList", in)
 	out := new(ReplyArticleList)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *articleService) GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error) {
+	req := c.c.NewRequest(c.name, "ArticleService.GetStatistic", in)
+	out := new(ReplyStatistic)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -153,6 +164,7 @@ type ArticleServiceHandler interface {
 	AddOne(context.Context, *ReqArticleAdd, *ReplyArticleInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyArticleInfo) error
 	GetList(context.Context, *RequestFilter, *ReplyArticleList) error
+	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateBase(context.Context, *ReqArticleUpdate, *ReplyArticleInfo) error
 	UpdateAssets(context.Context, *RequestList, *ReplyInfo) error
 	UpdateStatus(context.Context, *ReqArticleState, *ReplyInfo) error
@@ -166,6 +178,7 @@ func RegisterArticleServiceHandler(s server.Server, hdlr ArticleServiceHandler, 
 		AddOne(ctx context.Context, in *ReqArticleAdd, out *ReplyArticleInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyArticleInfo) error
 		GetList(ctx context.Context, in *RequestFilter, out *ReplyArticleList) error
+		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateBase(ctx context.Context, in *ReqArticleUpdate, out *ReplyArticleInfo) error
 		UpdateAssets(ctx context.Context, in *RequestList, out *ReplyInfo) error
 		UpdateStatus(ctx context.Context, in *ReqArticleState, out *ReplyInfo) error
@@ -194,6 +207,10 @@ func (h *articleServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out
 
 func (h *articleServiceHandler) GetList(ctx context.Context, in *RequestFilter, out *ReplyArticleList) error {
 	return h.ArticleServiceHandler.GetList(ctx, in, out)
+}
+
+func (h *articleServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error {
+	return h.ArticleServiceHandler.GetStatistic(ctx, in, out)
 }
 
 func (h *articleServiceHandler) UpdateBase(ctx context.Context, in *ReqArticleUpdate, out *ReplyArticleInfo) error {
