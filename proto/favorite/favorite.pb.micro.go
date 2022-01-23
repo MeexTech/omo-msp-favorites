@@ -52,6 +52,7 @@ type FavoriteService interface {
 	UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
 	AppendTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
 	SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
+	UpdateTargets(ctx context.Context, in *ReqFavoriteTargets, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type favoriteService struct {
@@ -246,6 +247,16 @@ func (c *favoriteService) SubtractTarget(ctx context.Context, in *ReqFavoriteTar
 	return out, nil
 }
 
+func (c *favoriteService) UpdateTargets(ctx context.Context, in *ReqFavoriteTargets, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "FavoriteService.UpdateTargets", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for FavoriteService service
 
 type FavoriteServiceHandler interface {
@@ -267,6 +278,7 @@ type FavoriteServiceHandler interface {
 	UpdateTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
 	AppendTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
 	SubtractTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
+	UpdateTargets(context.Context, *ReqFavoriteTargets, *ReplyInfo) error
 }
 
 func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler, opts ...server.HandlerOption) error {
@@ -289,6 +301,7 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 		UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
 		AppendTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
 		SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
+		UpdateTargets(ctx context.Context, in *ReqFavoriteTargets, out *ReplyInfo) error
 	}
 	type FavoriteService struct {
 		favoriteService
@@ -371,4 +384,8 @@ func (h *favoriteServiceHandler) AppendTarget(ctx context.Context, in *ReqFavori
 
 func (h *favoriteServiceHandler) SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error {
 	return h.FavoriteServiceHandler.SubtractTarget(ctx, in, out)
+}
+
+func (h *favoriteServiceHandler) UpdateTargets(ctx context.Context, in *ReqFavoriteTargets, out *ReplyInfo) error {
+	return h.FavoriteServiceHandler.UpdateTargets(ctx, in, out)
 }

@@ -23,6 +23,7 @@ service FavoriteService {
     rpc UpdateTarget(ReqFavoriteTarget) returns (ReplyFavoriteTargets){}
     rpc AppendTarget(ReqFavoriteTarget) returns (ReplyFavoriteTargets){}
     rpc SubtractTarget(ReqFavoriteTarget) returns (ReplyFavoriteTargets){}
+    rpc UpdateTargets(ReqFavoriteTargets) returns (ReplyInfo){}
 }
 
 message FavoriteInfo {
@@ -133,6 +134,12 @@ message ReqFavoriteKeys {
     string operator = 2;
     bool person = 3;
     repeated string keys = 4;
+}
+
+message ReqFavoriteTargets {
+    string operator = 1;
+    repeated string list = 2;
+    repeated string targets = 3;
 }
 
 message ReplyFavoriteKeys {
