@@ -5,7 +5,7 @@ option go_package= "proto/favorite";
 import "proto/favorite/common.proto";
 
 service MessageService {
-  rpc GetByFilter(RequestFilter) returns (ReplyMessages) {}
+  rpc GetByFilter(ReqMessageFilter) returns (ReplyMessages) {}
 }
 
 message MessageInfo {
@@ -14,11 +14,28 @@ message MessageInfo {
   string name = 3;
   DateInfo date = 4;
   string remark = 5;
-  string owner = 6;
-  string organizer = 7;
+  string owner = 6; //场景uid
+  string organizer = 7;//场景uid
   uint32 type = 8;
-  repeated string tags = 9;
-  repeated string targets = 10;
+  string entity = 9;
+  repeated string tags = 10;
+  repeated string targets = 11;
+}
+
+message TargetInfo {
+  uint64 time = 1; //时间限制
+  string owner = 2;
+  string entity = 3;
+  repeated string targets = 4;
+}
+
+message ReqMessageFilter {
+  string key = 1;
+  string value = 2;
+  uint32 page = 3;
+  uint32 number = 4;
+  repeated string array = 5;
+  repeated TargetInfo list = 6;
 }
 
 message ReplyMessages {

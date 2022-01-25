@@ -34,7 +34,7 @@ var _ server.Option
 // Client API for MessageService service
 
 type MessageService interface {
-	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyMessages, error)
+	GetByFilter(ctx context.Context, in *ReqMessageFilter, opts ...client.CallOption) (*ReplyMessages, error)
 }
 
 type messageService struct {
@@ -49,7 +49,7 @@ func NewMessageService(name string, c client.Client) MessageService {
 	}
 }
 
-func (c *messageService) GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyMessages, error) {
+func (c *messageService) GetByFilter(ctx context.Context, in *ReqMessageFilter, opts ...client.CallOption) (*ReplyMessages, error) {
 	req := c.c.NewRequest(c.name, "MessageService.GetByFilter", in)
 	out := new(ReplyMessages)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -62,12 +62,12 @@ func (c *messageService) GetByFilter(ctx context.Context, in *RequestFilter, opt
 // Server API for MessageService service
 
 type MessageServiceHandler interface {
-	GetByFilter(context.Context, *RequestFilter, *ReplyMessages) error
+	GetByFilter(context.Context, *ReqMessageFilter, *ReplyMessages) error
 }
 
 func RegisterMessageServiceHandler(s server.Server, hdlr MessageServiceHandler, opts ...server.HandlerOption) error {
 	type messageService interface {
-		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyMessages) error
+		GetByFilter(ctx context.Context, in *ReqMessageFilter, out *ReplyMessages) error
 	}
 	type MessageService struct {
 		messageService
@@ -80,6 +80,6 @@ type messageServiceHandler struct {
 	MessageServiceHandler
 }
 
-func (h *messageServiceHandler) GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyMessages) error {
+func (h *messageServiceHandler) GetByFilter(ctx context.Context, in *ReqMessageFilter, out *ReplyMessages) error {
 	return h.MessageServiceHandler.GetByFilter(ctx, in, out)
 }
