@@ -14,10 +14,11 @@ message MessageInfo {
   string name = 3;
   DateInfo date = 4;
   string remark = 5;
-  string organizer = 6;
-  uint32 type = 7;
-  repeated string tags = 8;
-  repeated string targets = 9;
+  string owner = 6;
+  string organizer = 7;
+  uint32 type = 8;
+  repeated string tags = 9;
+  repeated string targets = 10;
 }
 
 message ReplyMessages {
