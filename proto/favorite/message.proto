@@ -17,6 +17,7 @@ message MessageInfo {
   string organizer = 6;
   uint32 type = 7;
   repeated string tags = 8;
+  repeated string targets = 9;
 }
 
 message ReplyMessages {
