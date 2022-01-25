@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package omo.msp.favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service MessageService {
+  rpc GetByFilter(RequestFilter) returns (ReplyMessages) {}
+}
+
+message MessageInfo {
+  string uid = 1;
+  uint64 created = 2;
+  string name = 3;
+  DateInfo date = 4;
+  string remark = 5;
+  string organizer = 6;
+  uint32 type = 7;
+  repeated string tags = 8;
+}
+
+message ReplyMessages {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 count = 5;
+  repeated MessageInfo list = 6;
+}
