@@ -43,8 +43,8 @@ type ActivityService interface {
 	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
-	UpdateStatus(ctx context.Context, in *ReqActivityState, opts ...client.CallOption) (*ReplyInfo, error)
-	UpdateShow(ctx context.Context, in *ReqActivityState, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateShow(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	AppendOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
 	SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
@@ -154,7 +154,7 @@ func (c *activityService) UpdateTargets(ctx context.Context, in *RequestList, op
 	return out, nil
 }
 
-func (c *activityService) UpdateStatus(ctx context.Context, in *ReqActivityState, opts ...client.CallOption) (*ReplyInfo, error) {
+func (c *activityService) UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "ActivityService.UpdateStatus", in)
 	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -164,7 +164,7 @@ func (c *activityService) UpdateStatus(ctx context.Context, in *ReqActivityState
 	return out, nil
 }
 
-func (c *activityService) UpdateShow(ctx context.Context, in *ReqActivityState, opts ...client.CallOption) (*ReplyInfo, error) {
+func (c *activityService) UpdateShow(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "ActivityService.UpdateShow", in)
 	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -236,8 +236,8 @@ type ActivityServiceHandler interface {
 	UpdateTags(context.Context, *RequestList, *ReplyList) error
 	UpdateAssets(context.Context, *RequestList, *ReplyList) error
 	UpdateTargets(context.Context, *RequestList, *ReplyList) error
-	UpdateStatus(context.Context, *ReqActivityState, *ReplyInfo) error
-	UpdateShow(context.Context, *ReqActivityState, *ReplyInfo) error
+	UpdateStatus(context.Context, *RequestState, *ReplyInfo) error
+	UpdateShow(context.Context, *RequestState, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	AppendOne(context.Context, *RequestInfo, *ReplyPairList) error
 	SubtractOne(context.Context, *RequestInfo, *ReplyPairList) error
@@ -256,8 +256,8 @@ func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler
 		UpdateTags(ctx context.Context, in *RequestList, out *ReplyList) error
 		UpdateAssets(ctx context.Context, in *RequestList, out *ReplyList) error
 		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyList) error
-		UpdateStatus(ctx context.Context, in *ReqActivityState, out *ReplyInfo) error
-		UpdateShow(ctx context.Context, in *ReqActivityState, out *ReplyInfo) error
+		UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error
+		UpdateShow(ctx context.Context, in *RequestState, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		AppendOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
 		SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
@@ -311,11 +311,11 @@ func (h *activityServiceHandler) UpdateTargets(ctx context.Context, in *RequestL
 	return h.ActivityServiceHandler.UpdateTargets(ctx, in, out)
 }
 
-func (h *activityServiceHandler) UpdateStatus(ctx context.Context, in *ReqActivityState, out *ReplyInfo) error {
+func (h *activityServiceHandler) UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error {
 	return h.ActivityServiceHandler.UpdateStatus(ctx, in, out)
 }
 
-func (h *activityServiceHandler) UpdateShow(ctx context.Context, in *ReqActivityState, out *ReplyInfo) error {
+func (h *activityServiceHandler) UpdateShow(ctx context.Context, in *RequestState, out *ReplyInfo) error {
 	return h.ActivityServiceHandler.UpdateShow(ctx, in, out)
 }
 

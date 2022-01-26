@@ -40,7 +40,7 @@ type ArticleService interface {
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateBase(ctx context.Context, in *ReqArticleUpdate, opts ...client.CallOption) (*ReplyArticleInfo, error)
 	UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
-	UpdateStatus(ctx context.Context, in *ReqArticleState, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateTargets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
@@ -118,7 +118,7 @@ func (c *articleService) UpdateAssets(ctx context.Context, in *RequestList, opts
 	return out, nil
 }
 
-func (c *articleService) UpdateStatus(ctx context.Context, in *ReqArticleState, opts ...client.CallOption) (*ReplyInfo, error) {
+func (c *articleService) UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "ArticleService.UpdateStatus", in)
 	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -167,7 +167,7 @@ type ArticleServiceHandler interface {
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateBase(context.Context, *ReqArticleUpdate, *ReplyArticleInfo) error
 	UpdateAssets(context.Context, *RequestList, *ReplyInfo) error
-	UpdateStatus(context.Context, *ReqArticleState, *ReplyInfo) error
+	UpdateStatus(context.Context, *RequestState, *ReplyInfo) error
 	UpdateTags(context.Context, *RequestList, *ReplyInfo) error
 	UpdateTargets(context.Context, *RequestList, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
@@ -181,7 +181,7 @@ func RegisterArticleServiceHandler(s server.Server, hdlr ArticleServiceHandler, 
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateBase(ctx context.Context, in *ReqArticleUpdate, out *ReplyArticleInfo) error
 		UpdateAssets(ctx context.Context, in *RequestList, out *ReplyInfo) error
-		UpdateStatus(ctx context.Context, in *ReqArticleState, out *ReplyInfo) error
+		UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error
 		UpdateTags(ctx context.Context, in *RequestList, out *ReplyInfo) error
 		UpdateTargets(ctx context.Context, in *RequestList, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
@@ -221,7 +221,7 @@ func (h *articleServiceHandler) UpdateAssets(ctx context.Context, in *RequestLis
 	return h.ArticleServiceHandler.UpdateAssets(ctx, in, out)
 }
 
-func (h *articleServiceHandler) UpdateStatus(ctx context.Context, in *ReqArticleState, out *ReplyInfo) error {
+func (h *articleServiceHandler) UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error {
 	return h.ArticleServiceHandler.UpdateStatus(ctx, in, out)
 }
 

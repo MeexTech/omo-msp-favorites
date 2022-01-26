@@ -10,7 +10,7 @@ service NoticeService {
   rpc GetList(RequestFilter) returns (ReplyNoticeList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateBase(ReqNoticeUpdate) returns (ReplyNoticeInfo) {}
-  rpc UpdateStatus(ReqNoticeState) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
   rpc UpdateTags(RequestList) returns (ReplyInfo) {}
   rpc UpdateTargets(RequestList) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
@@ -49,12 +49,6 @@ message ReqNoticeUpdate{
   string body = 4;
   string operator = 5;
   repeated string targets = 6;
-}
-
-message ReqNoticeState{
-  string uid = 1;
-  uint32 status = 2;
-  string operator = 3;
 }
 
 message ReplyNoticeInfo {

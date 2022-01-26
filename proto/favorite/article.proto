@@ -11,7 +11,7 @@ service ArticleService {
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateBase(ReqArticleUpdate) returns (ReplyArticleInfo) {}
   rpc UpdateAssets(RequestList) returns (ReplyInfo) {}
-  rpc UpdateStatus(ReqArticleState) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
   rpc UpdateTags(RequestList) returns (ReplyInfo) {}
   rpc UpdateTargets(RequestList) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
@@ -54,12 +54,6 @@ message ReqArticleUpdate{
   string operator = 5;
   repeated string tags = 7;
   repeated string targets = 6;
-}
-
-message ReqArticleState{
-  string uid = 1;
-  uint32 status = 2;
-  string operator = 3;
 }
 
 message ReplyArticleInfo {
