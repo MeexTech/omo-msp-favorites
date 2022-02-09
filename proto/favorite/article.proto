@@ -9,6 +9,7 @@ service ArticleService {
   rpc GetOne(RequestInfo) returns (ReplyArticleInfo) {}
   rpc GetList(RequestFilter) returns (ReplyArticleList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateBase(ReqArticleUpdate) returns (ReplyArticleInfo) {}
   rpc UpdateAssets(RequestList) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestState) returns (ReplyInfo) {}

@@ -39,6 +39,7 @@ type ActivityService interface {
 	GetList(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyActivityList, error)
 	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyActivityList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
+	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateBase(ctx context.Context, in *ReqActivityUpdate, opts ...client.CallOption) (*ReplyActivityInfo, error)
 	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 	UpdateAssets(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
@@ -107,6 +108,16 @@ func (c *activityService) GetByFilter(ctx context.Context, in *RequestFilter, op
 func (c *activityService) GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error) {
 	req := c.c.NewRequest(c.name, "ActivityService.GetStatistic", in)
 	out := new(ReplyStatistic)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *activityService) UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ActivityService.UpdateByFilter", in)
+	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -232,6 +243,7 @@ type ActivityServiceHandler interface {
 	GetList(context.Context, *RequestInfo, *ReplyActivityList) error
 	GetByFilter(context.Context, *RequestFilter, *ReplyActivityList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
+	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	UpdateBase(context.Context, *ReqActivityUpdate, *ReplyActivityInfo) error
 	UpdateTags(context.Context, *RequestList, *ReplyList) error
 	UpdateAssets(context.Context, *RequestList, *ReplyList) error
@@ -252,6 +264,7 @@ func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler
 		GetList(ctx context.Context, in *RequestInfo, out *ReplyActivityList) error
 		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyActivityList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
+		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		UpdateBase(ctx context.Context, in *ReqActivityUpdate, out *ReplyActivityInfo) error
 		UpdateTags(ctx context.Context, in *RequestList, out *ReplyList) error
 		UpdateAssets(ctx context.Context, in *RequestList, out *ReplyList) error
@@ -293,6 +306,10 @@ func (h *activityServiceHandler) GetByFilter(ctx context.Context, in *RequestFil
 
 func (h *activityServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error {
 	return h.ActivityServiceHandler.GetStatistic(ctx, in, out)
+}
+
+func (h *activityServiceHandler) UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error {
+	return h.ActivityServiceHandler.UpdateByFilter(ctx, in, out)
 }
 
 func (h *activityServiceHandler) UpdateBase(ctx context.Context, in *ReqActivityUpdate, out *ReplyActivityInfo) error {

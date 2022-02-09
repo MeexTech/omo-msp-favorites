@@ -9,6 +9,7 @@ service NoticeService {
   rpc GetOne(RequestInfo) returns (ReplyNoticeInfo) {}
   rpc GetList(RequestFilter) returns (ReplyNoticeList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateBase(ReqNoticeUpdate) returns (ReplyNoticeInfo) {}
   rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
   rpc UpdateTags(RequestList) returns (ReplyInfo) {}

@@ -10,6 +10,7 @@ service ActivityService {
   rpc GetList(RequestInfo) returns (ReplyActivityList) {}
   rpc GetByFilter(RequestFilter) returns (ReplyActivityList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateBase(ReqActivityUpdate) returns (ReplyActivityInfo) {}
   rpc UpdateTags(RequestList) returns (ReplyList) {}
   rpc UpdateAssets(RequestList) returns (ReplyList) {}
@@ -42,13 +43,13 @@ message ActivityInfo {
   uint32 limit = 16;
   uint32 status = 17;
   uint32 show = 18;
-  string template = 25;
-  PrizeInfo prize =19;
-  repeated string tags = 20;
-  repeated string assets = 21;
-  repeated string targets = 22;
-  repeated PairInfo participants = 23;
-  repeated OpusInfo opuses = 24;
+  uint32 participant = 19;
+  string template = 20;
+  PrizeInfo prize = 21;
+  repeated string tags = 22;
+  repeated string assets = 23;
+  repeated string targets = 24;
+  repeated OpusInfo opuses = 25;
 }
 
 message PrizeInfo {

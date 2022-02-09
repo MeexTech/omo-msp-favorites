@@ -38,6 +38,7 @@ type NoticeService interface {
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyNoticeInfo, error)
 	GetList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyNoticeList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
+	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateBase(ctx context.Context, in *ReqNoticeUpdate, opts ...client.CallOption) (*ReplyNoticeInfo, error)
 	UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateTags(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyInfo, error)
@@ -90,6 +91,16 @@ func (c *noticeService) GetList(ctx context.Context, in *RequestFilter, opts ...
 func (c *noticeService) GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error) {
 	req := c.c.NewRequest(c.name, "NoticeService.GetStatistic", in)
 	out := new(ReplyStatistic)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *noticeService) UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "NoticeService.UpdateByFilter", in)
+	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -154,6 +165,7 @@ type NoticeServiceHandler interface {
 	GetOne(context.Context, *RequestInfo, *ReplyNoticeInfo) error
 	GetList(context.Context, *RequestFilter, *ReplyNoticeList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
+	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	UpdateBase(context.Context, *ReqNoticeUpdate, *ReplyNoticeInfo) error
 	UpdateStatus(context.Context, *RequestState, *ReplyInfo) error
 	UpdateTags(context.Context, *RequestList, *ReplyInfo) error
@@ -167,6 +179,7 @@ func RegisterNoticeServiceHandler(s server.Server, hdlr NoticeServiceHandler, op
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyNoticeInfo) error
 		GetList(ctx context.Context, in *RequestFilter, out *ReplyNoticeList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
+		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		UpdateBase(ctx context.Context, in *ReqNoticeUpdate, out *ReplyNoticeInfo) error
 		UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error
 		UpdateTags(ctx context.Context, in *RequestList, out *ReplyInfo) error
@@ -198,6 +211,10 @@ func (h *noticeServiceHandler) GetList(ctx context.Context, in *RequestFilter, o
 
 func (h *noticeServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error {
 	return h.NoticeServiceHandler.GetStatistic(ctx, in, out)
+}
+
+func (h *noticeServiceHandler) UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error {
+	return h.NoticeServiceHandler.UpdateByFilter(ctx, in, out)
 }
 
 func (h *noticeServiceHandler) UpdateBase(ctx context.Context, in *ReqNoticeUpdate, out *ReplyNoticeInfo) error {
