@@ -20,6 +20,7 @@ service NoticeService {
 message NoticeInfo {
   string uid = 1;
   uint64 id = 2;
+  uint32 type = 3;
   int64 created = 4;
   int64 updated = 5;
   string creator = 6;
@@ -39,8 +40,9 @@ message ReqNoticeAdd{
   string body = 3;
   string owner = 4;
   string operator = 5;
+  uint32 type = 6;
   repeated string tags = 7;
-  repeated string targets = 6;
+  repeated string targets = 8;
 }
 
 message ReqNoticeUpdate{
