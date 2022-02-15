@@ -35,6 +35,7 @@ var _ server.Option
 
 type MessageService interface {
 	GetByFilter(ctx context.Context, in *ReqMessageFilter, opts ...client.CallOption) (*ReplyMessages, error)
+	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 }
 
 type messageService struct {
@@ -59,15 +60,27 @@ func (c *messageService) GetByFilter(ctx context.Context, in *ReqMessageFilter, 
 	return out, nil
 }
 
+func (c *messageService) GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error) {
+	req := c.c.NewRequest(c.name, "MessageService.GetStatistic", in)
+	out := new(ReplyStatistic)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for MessageService service
 
 type MessageServiceHandler interface {
 	GetByFilter(context.Context, *ReqMessageFilter, *ReplyMessages) error
+	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 }
 
 func RegisterMessageServiceHandler(s server.Server, hdlr MessageServiceHandler, opts ...server.HandlerOption) error {
 	type messageService interface {
 		GetByFilter(ctx context.Context, in *ReqMessageFilter, out *ReplyMessages) error
+		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 	}
 	type MessageService struct {
 		messageService
@@ -82,4 +95,8 @@ type messageServiceHandler struct {
 
 func (h *messageServiceHandler) GetByFilter(ctx context.Context, in *ReqMessageFilter, out *ReplyMessages) error {
 	return h.MessageServiceHandler.GetByFilter(ctx, in, out)
+}
+
+func (h *messageServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error {
+	return h.MessageServiceHandler.GetStatistic(ctx, in, out)
 }

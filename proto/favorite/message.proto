@@ -6,6 +6,7 @@ import "proto/favorite/common.proto";
 
 service MessageService {
   rpc GetByFilter(ReqMessageFilter) returns (ReplyMessages) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic){}
 }
 
 message MessageInfo {
