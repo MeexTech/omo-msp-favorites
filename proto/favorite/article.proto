@@ -31,9 +31,10 @@ message ArticleInfo {
   string subtitle = 10;
   string owner = 11;
   uint32 status = 12;
-  repeated string targets = 13;
-  repeated string assets = 14;
-  repeated string tags = 15;
+  string author = 13;
+  repeated string targets = 14;
+  repeated string assets = 15;
+  repeated string tags = 16;
 }
 
 message ReqArticleAdd{
@@ -42,9 +43,10 @@ message ReqArticleAdd{
   string body = 3;
   string owner = 4;
   string operator = 5;
-  repeated string tags = 8;
-  repeated string assets = 6;
-  repeated string targets = 7;
+  string author = 6;
+  repeated string tags = 7;
+  repeated string assets = 8;
+  repeated string targets = 9;
 }
 
 message ReqArticleUpdate{
@@ -53,8 +55,9 @@ message ReqArticleUpdate{
   string subtitle = 3;
   string body = 4;
   string operator = 5;
+  string author = 6;
   repeated string tags = 7;
-  repeated string targets = 6;
+  repeated string targets = 8;
 }
 
 message ReplyArticleInfo {
