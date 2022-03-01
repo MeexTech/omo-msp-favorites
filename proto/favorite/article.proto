@@ -44,9 +44,10 @@ message ReqArticleAdd{
   string owner = 4;
   string operator = 5;
   string author = 6;
-  repeated string tags = 7;
-  repeated string assets = 8;
-  repeated string targets = 9;
+  uint32 type = 7;
+  repeated string tags = 8;
+  repeated string assets = 9;
+  repeated string targets = 10;
 }
 
 message ReqArticleUpdate{
