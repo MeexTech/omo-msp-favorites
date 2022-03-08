@@ -106,7 +106,8 @@ message ReqFavoriteTarget{
     string skin = 4;
     string uid = 5;
     bool person = 6;
-    repeated string slots = 7;
+    string owner = 7;
+    repeated string slots = 8;
 }
 
 message ReplyFavoriteInfo {
@@ -132,8 +133,9 @@ message ReqFavoriteKeys {
 
 message ReqFavoriteTargets {
     string operator = 1;
-    repeated string list = 2;
-    repeated string targets = 3;
+    string owner = 2;
+    repeated string list = 3;
+    repeated string targets = 4;
 }
 
 message ReplyFavoriteKeys {
