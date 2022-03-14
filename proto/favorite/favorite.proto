@@ -39,13 +39,6 @@ message FavoriteInfo {
   repeated string keys = 16;
 }
 
-message ShowInfo {
-  string target = 1;
-  string effect = 2;
-  string  skin = 3;
-  repeated string slots = 4;
-}
-
 message ReqFavoriteAdd {
   string name = 1;
   string owner = 2;
