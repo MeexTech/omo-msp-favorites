@@ -36,9 +36,7 @@ var _ server.Option
 type FavoriteService interface {
 	AddOne(ctx context.Context, in *ReqFavoriteAdd, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
-	GetByOrigin(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error)
 	GetList(ctx context.Context, in *ReqFavoriteList, opts ...client.CallOption) (*ReplyFavoriteList, error)
-	GetByList(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyFavoriteList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
@@ -50,10 +48,6 @@ type FavoriteService interface {
 	UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
 	AppendKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
 	SubtractKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteKeys, error)
-	UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
-	AppendTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
-	SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error)
-	UpdateTargets(ctx context.Context, in *ReqFavoriteTargets, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type favoriteService struct {
@@ -88,28 +82,8 @@ func (c *favoriteService) GetOne(ctx context.Context, in *RequestInfo, opts ...c
 	return out, nil
 }
 
-func (c *favoriteService) GetByOrigin(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyFavoriteInfo, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.GetByOrigin", in)
-	out := new(ReplyFavoriteInfo)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *favoriteService) GetList(ctx context.Context, in *ReqFavoriteList, opts ...client.CallOption) (*ReplyFavoriteList, error) {
 	req := c.c.NewRequest(c.name, "FavoriteService.GetList", in)
-	out := new(ReplyFavoriteList)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *favoriteService) GetByList(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyFavoriteList, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.GetByList", in)
 	out := new(ReplyFavoriteList)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -228,54 +202,12 @@ func (c *favoriteService) SubtractKey(ctx context.Context, in *RequestInfo, opts
 	return out, nil
 }
 
-func (c *favoriteService) UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.UpdateTarget", in)
-	out := new(ReplyFavoriteTargets)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *favoriteService) AppendTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.AppendTarget", in)
-	out := new(ReplyFavoriteTargets)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *favoriteService) SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, opts ...client.CallOption) (*ReplyFavoriteTargets, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.SubtractTarget", in)
-	out := new(ReplyFavoriteTargets)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *favoriteService) UpdateTargets(ctx context.Context, in *ReqFavoriteTargets, opts ...client.CallOption) (*ReplyInfo, error) {
-	req := c.c.NewRequest(c.name, "FavoriteService.UpdateTargets", in)
-	out := new(ReplyInfo)
-	err := c.c.Call(ctx, req, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // Server API for FavoriteService service
 
 type FavoriteServiceHandler interface {
 	AddOne(context.Context, *ReqFavoriteAdd, *ReplyFavoriteInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyFavoriteInfo) error
-	GetByOrigin(context.Context, *RequestInfo, *ReplyFavoriteInfo) error
 	GetList(context.Context, *ReqFavoriteList, *ReplyFavoriteList) error
-	GetByList(context.Context, *RequestList, *ReplyFavoriteList) error
 	GetByFilter(context.Context, *RequestFilter, *ReplyFavoriteList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
@@ -287,19 +219,13 @@ type FavoriteServiceHandler interface {
 	UpdateKeys(context.Context, *ReqFavoriteKeys, *ReplyFavoriteKeys) error
 	AppendKey(context.Context, *RequestInfo, *ReplyFavoriteKeys) error
 	SubtractKey(context.Context, *RequestInfo, *ReplyFavoriteKeys) error
-	UpdateTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
-	AppendTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
-	SubtractTarget(context.Context, *ReqFavoriteTarget, *ReplyFavoriteTargets) error
-	UpdateTargets(context.Context, *ReqFavoriteTargets, *ReplyInfo) error
 }
 
 func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler, opts ...server.HandlerOption) error {
 	type favoriteService interface {
 		AddOne(ctx context.Context, in *ReqFavoriteAdd, out *ReplyFavoriteInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error
-		GetByOrigin(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error
 		GetList(ctx context.Context, in *ReqFavoriteList, out *ReplyFavoriteList) error
-		GetByList(ctx context.Context, in *RequestList, out *ReplyFavoriteList) error
 		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyFavoriteList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
@@ -311,10 +237,6 @@ func RegisterFavoriteServiceHandler(s server.Server, hdlr FavoriteServiceHandler
 		UpdateKeys(ctx context.Context, in *ReqFavoriteKeys, out *ReplyFavoriteKeys) error
 		AppendKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error
 		SubtractKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error
-		UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
-		AppendTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
-		SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error
-		UpdateTargets(ctx context.Context, in *ReqFavoriteTargets, out *ReplyInfo) error
 	}
 	type FavoriteService struct {
 		favoriteService
@@ -335,16 +257,8 @@ func (h *favoriteServiceHandler) GetOne(ctx context.Context, in *RequestInfo, ou
 	return h.FavoriteServiceHandler.GetOne(ctx, in, out)
 }
 
-func (h *favoriteServiceHandler) GetByOrigin(ctx context.Context, in *RequestInfo, out *ReplyFavoriteInfo) error {
-	return h.FavoriteServiceHandler.GetByOrigin(ctx, in, out)
-}
-
 func (h *favoriteServiceHandler) GetList(ctx context.Context, in *ReqFavoriteList, out *ReplyFavoriteList) error {
 	return h.FavoriteServiceHandler.GetList(ctx, in, out)
-}
-
-func (h *favoriteServiceHandler) GetByList(ctx context.Context, in *RequestList, out *ReplyFavoriteList) error {
-	return h.FavoriteServiceHandler.GetByList(ctx, in, out)
 }
 
 func (h *favoriteServiceHandler) GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyFavoriteList) error {
@@ -389,20 +303,4 @@ func (h *favoriteServiceHandler) AppendKey(ctx context.Context, in *RequestInfo,
 
 func (h *favoriteServiceHandler) SubtractKey(ctx context.Context, in *RequestInfo, out *ReplyFavoriteKeys) error {
 	return h.FavoriteServiceHandler.SubtractKey(ctx, in, out)
-}
-
-func (h *favoriteServiceHandler) UpdateTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error {
-	return h.FavoriteServiceHandler.UpdateTarget(ctx, in, out)
-}
-
-func (h *favoriteServiceHandler) AppendTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error {
-	return h.FavoriteServiceHandler.AppendTarget(ctx, in, out)
-}
-
-func (h *favoriteServiceHandler) SubtractTarget(ctx context.Context, in *ReqFavoriteTarget, out *ReplyFavoriteTargets) error {
-	return h.FavoriteServiceHandler.SubtractTarget(ctx, in, out)
-}
-
-func (h *favoriteServiceHandler) UpdateTargets(ctx context.Context, in *ReqFavoriteTargets, out *ReplyInfo) error {
-	return h.FavoriteServiceHandler.UpdateTargets(ctx, in, out)
 }

@@ -1,0 +1,145 @@
+syntax = "proto3";
+
+package omo.msp.favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service DisplayService {
+    rpc AddOne(ReqDisplayAdd) returns (ReplyDisplayInfo) {}
+    rpc GetOne(RequestInfo) returns (ReplyDisplayInfo) {}
+    rpc GetByOrigin(RequestInfo) returns (ReplyDisplayInfo) {}
+    rpc GetList(ReqDisplayList) returns (ReplyDisplayList) {}
+    rpc GetByList(RequestList) returns (ReplyDisplayList) {}
+    rpc GetByFilter(RequestFilter) returns (ReplyDisplayList) {}
+    rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+    rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+    rpc UpdateBase(ReqDisplayUpdate) returns (ReplyDisplayInfo) {}
+    rpc UpdateMeta(ReqDisplayMeta) returns (ReplyDisplayInfo) {}
+    rpc UpdateTags(ReqDisplayTags) returns (ReplyDisplayInfo) {}
+    rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
+    rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+    rpc UpdateKeys(ReqDisplayKeys) returns (ReplyDisplayKeys) {}
+    rpc AppendKey(RequestInfo) returns (ReplyDisplayKeys){}
+    rpc SubtractKey(RequestInfo) returns (ReplyDisplayKeys){}
+    rpc UpdateTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
+    rpc AppendTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
+    rpc SubtractTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
+    rpc UpdateTargets(ReqDisplayTargets) returns (ReplyInfo){}
+}
+
+message DisplayInfo {
+    string uid = 1;
+    uint64 id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string name = 5;
+    string owner = 6;
+    string remark = 7;
+    string creator = 8;
+    string operator = 9;
+    string cover = 10;
+    string origin = 11;
+    uint32 type = 12;
+    string meta = 13;
+    uint32 status = 14;
+    repeated string tags = 15;
+    repeated string keys = 16;
+    repeated ShowInfo targets = 17;
+}
+
+message ShowInfo {
+     string target = 1;
+     string effect = 2;
+     string  skin = 3;
+     repeated string slots = 4;
+}
+
+message ReqDisplayAdd {
+    string name = 1;
+    string owner = 2;
+    string remark = 3;
+    string cover = 4;
+    int32 type = 5;
+    string operator = 6;
+    string origin = 7;
+    uint32 status = 9;
+    repeated string keys = 10;
+    repeated string tags = 11;
+}
+
+message ReqDisplayUpdate {
+    string uid = 1;
+    string name = 2;
+    string remark = 3;
+    string cover = 4;
+    string operator = 5;
+    string origin = 6;
+    uint32 type = 7;
+}
+
+message ReqDisplayTags{
+    string uid = 1;
+    string operator = 2;
+    repeated string tags = 3;
+}
+
+message ReqDisplayList{
+    string owner = 1;
+    uint32 type = 2;
+}
+
+message ReqDisplayMeta{
+    string uid = 1;
+    string operator = 2;
+    string meta = 4;
+}
+
+message ReqDisplayTarget{
+    string operator = 1;
+    string target = 2;
+    string effect = 3;
+    string skin = 4;
+    string uid = 5;
+    string owner = 6;
+    string last = 7;
+    repeated string slots = 8;
+}
+
+message ReplyDisplayInfo {
+    DisplayInfo info = 1;
+    ReplyStatus status = 2;
+}
+
+message ReplyDisplayList {
+    ReplyStatus status = 1;
+    uint32 total = 2;
+    uint32 pages = 3;
+    uint32 page = 4;
+    uint32 number = 5;
+    repeated DisplayInfo list = 6;
+}
+
+message ReqDisplayKeys {
+    string uid = 1;
+    string operator = 2;
+    repeated string keys = 4;
+}
+
+message ReqDisplayTargets {
+    string operator = 1;
+    string owner = 2;
+    repeated string list = 3;
+    repeated string targets = 4;
+}
+
+message ReplyDisplayKeys {
+    string uid = 1;
+    repeated string keys = 2;
+    ReplyStatus status = 3;
+}
+
+message ReplyDisplayTargets {
+    string uid = 1;
+    ReplyStatus status = 2;
+    repeated ShowInfo targets = 3;
+}
