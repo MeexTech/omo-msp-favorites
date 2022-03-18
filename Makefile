@@ -8,3 +8,4 @@ proto:
 	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/notice.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/message.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/display.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/sheet.proto

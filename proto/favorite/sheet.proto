@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package omo.msp.favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service SheetService {
+  rpc AddOne(ReqSheetAdd) returns (ReplySheetInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplySheetInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplySheetList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateBase(ReqSheetUpdate) returns (ReplySheetInfo) {}
+  rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc UpdateKeys(ReqSheetKeys) returns (ReplySheetKeys) {}
+  rpc AppendKey(RequestInfo) returns (ReplySheetKeys){}
+  rpc SubtractKey(RequestInfo) returns (ReplySheetKeys){}
+}
+
+message SheetInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string name = 5;
+  string owner = 6;
+  string remark = 7;
+  string creator = 8;
+  string operator = 9;
+  string quote = 10;
+  uint32 status = 11;
+  repeated string keys = 16;
+}
+
+message ReqSheetAdd {
+  string name = 1;
+  string owner = 2;
+  string remark = 3;
+  string operator = 4;
+  string quote = 5;
+  uint32 status = 6;
+  repeated string keys = 7;
+}
+
+message ReqSheetUpdate {
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string operator = 5;
+}
+
+message ReplySheetInfo {
+  SheetInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplySheetList {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated SheetInfo list = 6;
+}
+
+message ReqSheetKeys {
+  string uid = 1;
+  string operator = 2;
+  repeated string keys = 4;
+}
+
+message ReplySheetKeys {
+  string uid = 1;
+  repeated string keys = 2;
+  ReplyStatus status = 3;
+}

@@ -27,7 +27,6 @@ message RequestInfo {
   string uid = 1;
   string flag = 2;
   string owner = 3;
-  bool person = 4;
   string operator = 5;
 }
 
@@ -37,7 +36,6 @@ message RequestFilter {
   string value = 3;
   uint32 page = 4;
   uint32 number = 5;
-  bool person = 6;
   repeated string list = 7;
 }
 
@@ -46,7 +44,7 @@ message RequestUpdate {
   string uid = 2;
   string key = 3;
   string value = 4;
-  bool person = 5;
+  string operator = 5;
   repeated string list = 6;
 }
 
@@ -54,7 +52,6 @@ message RequestState{
   string uid = 1;
   uint32 status = 2;
   string operator = 3;
-  bool person = 4;
 }
 
 message ReplyStatus {
@@ -71,7 +68,6 @@ message ReplyInfo {
 message RequestList{
   string uid = 1;
   string operator = 2;
-  bool person = 3;
   repeated string list = 4;
 }
 
