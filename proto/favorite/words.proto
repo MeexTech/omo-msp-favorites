@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package omo.msp.favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service WordsService {
+  rpc AddOne(ReqWordsAdd) returns (ReplyWordsInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyWordsInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyWordsList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+}
+
+message WordsInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string name = 5;
+  string owner = 6;
+  string words = 7;
+  string creator = 8;
+  string operator = 9;
+  string target = 10;
+  uint32 type = 12;
+}
+
+message ReqWordsAdd {
+  string words = 1;
+  string owner = 2;
+  string operator = 3;
+  string target = 4;
+  uint32 type = 5;
+}
+
+message ReplyWordsInfo {
+  WordsInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyWordsList {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated WordsInfo list = 6;
+}
