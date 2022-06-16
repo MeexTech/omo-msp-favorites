@@ -27,6 +27,7 @@ message WordsInfo {
   uint32 type = 12;
   uint32 weight = 13;
   string asset = 14;
+  string quote = 15;
 }
 
 message ReqWordsAdd {
@@ -35,6 +36,8 @@ message ReqWordsAdd {
   string operator = 3;
   string target = 4;
   uint32 type = 5;
+  string quote = 6;
+  string asset = 7;
 }
 
 message ReplyWordsInfo {
