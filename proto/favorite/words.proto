@@ -28,6 +28,7 @@ message WordsInfo {
   uint32 weight = 13;
   string asset = 14;
   string quote = 15;
+  string device = 16;
 }
 
 message ReqWordsAdd {
@@ -38,6 +39,7 @@ message ReqWordsAdd {
   uint32 type = 5;
   string quote = 6;
   string asset = 7;
+  string device = 8;
 }
 
 message ReplyWordsInfo {
