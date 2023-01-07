@@ -50,12 +50,20 @@ message ActivityInfo {
   repeated string assets = 23;
   repeated string targets = 24;
   repeated OpusInfo opuses = 25;
+  repeated RecordInfo records = 26;
 }
 
 message PrizeInfo {
   string name = 1;
   string desc = 2;
   repeated RankInfo ranks = 3;
+}
+
+message RecordInfo{
+  uint32 option = 1;
+  string from = 2;
+  string to = 3;
+  string remark = 4;
 }
 
 message RankInfo {
