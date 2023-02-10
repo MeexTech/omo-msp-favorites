@@ -29,6 +29,7 @@ message WordsInfo {
   string quote = 15;
   string device = 16;
   repeated string assets = 14;
+  uint32 count = 17;
 }
 
 message ReqWordsAdd {
