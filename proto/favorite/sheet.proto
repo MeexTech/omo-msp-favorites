@@ -14,7 +14,7 @@ service SheetService {
   rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc UpdateKeys(ReqSheetKeys) returns (ReplySheetKeys) {}
-  rpc AppendKey(RequestInfo) returns (ReplySheetKeys){}
+  rpc AppendKey(ReqSheetContent) returns (ReplySheetKeys){}
   rpc SubtractKey(RequestInfo) returns (ReplySheetKeys){}
 }
 
@@ -57,6 +57,13 @@ message ReqSheetUpdate {
   string operator = 5;
 }
 
+message ReqSheetContent {
+  string uid = 1;
+  string content = 2;
+  uint32 weight = 3;
+  string operator = 4;
+}
+
 message ReplySheetInfo {
   SheetInfo info = 1;
   ReplyStatus status = 2;
@@ -74,11 +81,11 @@ message ReplySheetList {
 message ReqSheetKeys {
   string uid = 1;
   string operator = 2;
-  repeated string keys = 4;
+  repeated ContentWeight keys = 4;
 }
 
 message ReplySheetKeys {
   string uid = 1;
-  repeated string keys = 2;
+  repeated ContentWeight keys = 2;
   ReplyStatus status = 3;
 }
