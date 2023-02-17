@@ -47,7 +47,7 @@ message ReqSheetAdd {
   string quote = 5;
   uint32 status = 6;
   uint32 type = 7;
-  repeated string keys = 8;
+  repeated ContentWeight keys = 8;
 }
 
 message ReqSheetUpdate {
