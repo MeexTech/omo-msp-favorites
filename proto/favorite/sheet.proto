@@ -31,7 +31,12 @@ message SheetInfo {
   string quote = 10;
   uint32 status = 11;
   uint32 type = 12;
-  repeated string keys = 16;
+  repeated ContentWeight contents = 16;
+}
+
+message ContentWeight {
+  string uid = 1;
+  uint32 weight = 2;
 }
 
 message ReqSheetAdd {
