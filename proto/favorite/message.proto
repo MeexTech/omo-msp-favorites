@@ -19,15 +19,15 @@ message MessageInfo {
   string organizer = 7;//场景uid
   uint32 type = 8;
   string entity = 9;
-  repeated string tags = 10;
-  repeated string targets = 11;
+  repeated string tags = 20;
+  repeated string targets = 21;
 }
 
 message TargetInfo {
   uint64 time = 1; //时间限制
   string owner = 2;
   string entity = 3;
-  repeated string targets = 4;
+  repeated string targets = 11;
 }
 
 message ReqMessageFilter {
@@ -35,8 +35,8 @@ message ReqMessageFilter {
   string value = 2;
   uint32 page = 3;
   uint32 number = 4;
-  repeated string array = 5;
-  repeated TargetInfo list = 6;
+  repeated string array = 11;
+  repeated TargetInfo list = 12;
 }
 
 message ReplyMessages {
@@ -45,5 +45,5 @@ message ReplyMessages {
   uint32 pages = 3;
   uint32 page = 4;
   uint32 count = 5;
-  repeated MessageInfo list = 6;
+  repeated MessageInfo list = 16;
 }

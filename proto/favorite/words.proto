@@ -28,8 +28,8 @@ message WordsInfo {
   uint32 weight = 13;
   string quote = 15;
   string device = 16;
-  repeated string assets = 14;
   uint32 count = 17;
+  repeated string assets = 31;
 }
 
 message ReqWordsAdd {
@@ -40,7 +40,7 @@ message ReqWordsAdd {
   uint32 type = 5;
   string quote = 6;
   string device = 7;
-  repeated string assets = 8;
+  repeated string assets = 18;
 }
 
 message ReplyWordsInfo {
@@ -54,5 +54,5 @@ message ReplyWordsList {
   uint32 pages = 3;
   uint32 page = 4;
   uint32 number = 5;
-  repeated WordsInfo list = 6;
+  repeated WordsInfo list = 16;
 }

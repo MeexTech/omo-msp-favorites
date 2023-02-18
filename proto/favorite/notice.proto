@@ -30,8 +30,8 @@ message NoticeInfo {
   string subtitle = 10;
   string owner = 11;
   uint32 status = 12;
-  repeated string targets = 13;
-  repeated string tags = 14;
+  repeated string targets = 31;
+  repeated string tags = 32;
 }
 
 message ReqNoticeAdd{
@@ -41,8 +41,8 @@ message ReqNoticeAdd{
   string owner = 4;
   string operator = 5;
   uint32 type = 6;
-  repeated string tags = 7;
-  repeated string targets = 8;
+  repeated string tags = 17;
+  repeated string targets = 18;
 }
 
 message ReqNoticeUpdate{
@@ -51,7 +51,7 @@ message ReqNoticeUpdate{
   string subtitle = 3;
   string body = 4;
   string operator = 5;
-  repeated string targets = 6;
+  repeated string targets = 16;
 }
 
 message ReplyNoticeInfo {
@@ -65,5 +65,5 @@ message ReplyNoticeList {
   uint32 pages = 3;
   uint32 page = 4;
   uint32 number = 5;
-  repeated NoticeInfo list = 6;
+  repeated NoticeInfo list = 16;
 }

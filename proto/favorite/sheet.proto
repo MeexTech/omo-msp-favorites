@@ -31,7 +31,7 @@ message SheetInfo {
   string quote = 10;
   uint32 status = 11;
   uint32 type = 12;
-  repeated ContentWeight contents = 16;
+  repeated ContentWeight contents = 21;
 }
 
 message ContentWeight {
@@ -47,7 +47,7 @@ message ReqSheetAdd {
   string quote = 5;
   uint32 status = 6;
   uint32 type = 7;
-  repeated ContentWeight keys = 8;
+  repeated ContentWeight keys = 18;
 }
 
 message ReqSheetUpdate {
@@ -75,17 +75,17 @@ message ReplySheetList {
   uint32 pages = 3;
   uint32 page = 4;
   uint32 number = 5;
-  repeated SheetInfo list = 6;
+  repeated SheetInfo list = 16;
 }
 
 message ReqSheetKeys {
   string uid = 1;
   string operator = 2;
-  repeated ContentWeight keys = 4;
+  repeated ContentWeight keys = 14;
 }
 
 message ReplySheetKeys {
   string uid = 1;
-  repeated ContentWeight keys = 2;
+  repeated ContentWeight keys = 12;
   ReplyStatus status = 3;
 }

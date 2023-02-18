@@ -42,16 +42,17 @@ message DisplayInfo {
     uint32 type = 12;
     string meta = 13;
     uint32 status = 14;
-    repeated string tags = 15;
-    repeated string keys = 16;
-    repeated ShowInfo targets = 17;
+    repeated string tags = 30;
+    repeated string keys = 31;
+    repeated ShowInfo targets = 32;
 }
 
 message ShowInfo {
      string target = 1;
      string effect = 2;
-     string  skin = 3;
-     repeated string slots = 4;
+     string skin = 3;
+     string menu = 4;
+     repeated string slots = 20;
 }
 
 message ReqDisplayAdd {
@@ -102,7 +103,8 @@ message ReqDisplayTarget{
     string uid = 5;
     string owner = 6;
     string last = 7;
-    repeated string slots = 8;
+    string menu = 8;
+    repeated string slots = 20;
 }
 
 message ReplyDisplayInfo {
@@ -116,30 +118,30 @@ message ReplyDisplayList {
     uint32 pages = 3;
     uint32 page = 4;
     uint32 number = 5;
-    repeated DisplayInfo list = 6;
+    repeated DisplayInfo list = 20;
 }
 
 message ReqDisplayKeys {
     string uid = 1;
     string operator = 2;
-    repeated string keys = 4;
+    repeated string keys = 20;
 }
 
 message ReqDisplayTargets {
     string operator = 1;
     string owner = 2;
-    repeated string list = 3;
-    repeated string targets = 4;
+    repeated string list = 20;
+    repeated string targets = 21;
 }
 
 message ReplyDisplayKeys {
     string uid = 1;
-    repeated string keys = 2;
-    ReplyStatus status = 3;
+    ReplyStatus status = 2;
+    repeated string keys = 20;
 }
 
 message ReplyDisplayTargets {
     string uid = 1;
     ReplyStatus status = 2;
-    repeated ShowInfo targets = 3;
+    repeated ShowInfo targets = 20;
 }

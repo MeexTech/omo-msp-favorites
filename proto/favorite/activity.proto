@@ -46,11 +46,11 @@ message ActivityInfo {
   uint32 participant = 19;
   string template = 20;
   PrizeInfo prize = 21;
-  repeated string tags = 22;
-  repeated string assets = 23;
-  repeated string targets = 24;
-  repeated OpusInfo opuses = 25;
-  repeated RecordInfo records = 26;
+  repeated string tags = 41;
+  repeated string assets = 42;
+  repeated string targets = 43;
+  repeated OpusInfo opuses = 44;
+  repeated RecordInfo records = 45;
 }
 
 message PrizeInfo {
@@ -95,9 +95,9 @@ message ReqActivityAdd {
   string template = 13;
   PrizeInfo prize = 14;
   uint32 status = 15;
-  repeated string assets = 16;
-  repeated string tags = 17;
-  repeated string targets = 18;
+  repeated string assets = 31;
+  repeated string tags = 32;
+  repeated string targets = 33;
 }
 
 message ReqActivityUpdate {
@@ -111,9 +111,9 @@ message ReqActivityUpdate {
   string organizer = 8;
   string require = 9;
   uint32 limit = 10;
-  repeated string tags = 11;
-  repeated string targets = 12;
-  repeated string assets = 13;
+  repeated string tags = 21;
+  repeated string targets = 22;
+  repeated string assets = 23;
 }
 
 message ReqActivityPrize {
@@ -121,13 +121,13 @@ message ReqActivityPrize {
   string name = 2;
   string desc = 3;
   string operator = 4;
-  repeated RankInfo ranks = 5;
+  repeated RankInfo ranks = 15;
 }
 
 message ReqActivityOpuses {
   string uid = 1;
   string operator = 2;
-  repeated OpusInfo list = 3;
+  repeated OpusInfo list = 13;
 }
 
 message ReplyActivityInfo {
@@ -141,7 +141,7 @@ message ReplyActivityList {
   uint32 pages = 3;
   uint32 page = 4;
   uint32 number = 5;
-  repeated ActivityInfo list = 6;
+  repeated ActivityInfo list = 16;
 }
 
 message ReplyPairList {

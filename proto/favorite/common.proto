@@ -45,7 +45,7 @@ message RequestUpdate {
   string key = 3;
   string value = 4;
   string operator = 5;
-  repeated string list = 6;
+  repeated string list = 20;
 }
 
 message RequestState{
@@ -68,13 +68,13 @@ message ReplyInfo {
 message RequestList{
   string uid = 1;
   string operator = 2;
-  repeated string list = 4;
+  repeated string list = 21;
 }
 
 message ReplyList{
   string uid = 1;
   ReplyStatus status = 2;
-  repeated string list = 3;
+  repeated string list = 21;
 }
 
 message ReplyStatistic {

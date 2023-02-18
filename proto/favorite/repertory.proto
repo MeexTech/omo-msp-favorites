@@ -20,7 +20,7 @@ message RepertoryInfo {
   string remark = 7;
   string creator = 8;
   string operator = 9;
-  repeated string bags = 10;
+  repeated string bags = 20;
 }
 
 message ReplyRepertoryInfo {
@@ -30,5 +30,5 @@ message ReplyRepertoryInfo {
 
 message ReqRepertoryBags {
   string uid = 1;
-  repeated string list = 2;
+  repeated string list = 11;
 }

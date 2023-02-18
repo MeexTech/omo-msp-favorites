@@ -35,8 +35,8 @@ message FavoriteInfo {
   uint32 type = 12;
   string meta = 13;
   uint32 status = 14;
-  repeated string tags = 15;
-  repeated string keys = 16;
+  repeated string tags = 30;
+  repeated string keys = 31;
 }
 
 message ReqFavoriteAdd {
@@ -48,8 +48,8 @@ message ReqFavoriteAdd {
   string operator = 6;
   string origin = 7;
   uint32 status = 9;
-  repeated string keys = 10;
-  repeated string tags = 11;
+  repeated string keys = 30;
+  repeated string tags = 31;
 }
 
 message ReqFavoriteUpdate {
@@ -65,7 +65,7 @@ message ReqFavoriteUpdate {
 message ReqFavoriteTags{
   string uid = 1;
   string operator = 2;
-  repeated string tags = 4;
+  repeated string tags = 21;
 }
 
 message ReqFavoriteList{
@@ -90,17 +90,17 @@ message ReplyFavoriteList {
   uint32 pages = 3;
   uint32 page = 4;
   uint32 number = 5;
-  repeated FavoriteInfo list = 6;
+  repeated FavoriteInfo list = 21;
 }
 
 message ReqFavoriteKeys {
   string uid = 1;
   string operator = 2;
-  repeated string keys = 4;
+  repeated string keys = 21;
 }
 
 message ReplyFavoriteKeys {
   string uid = 1;
-  repeated string keys = 2;
   ReplyStatus status = 3;
+  repeated string keys = 21;
 }
