@@ -42,9 +42,9 @@ type SheetService interface {
 	UpdateBase(ctx context.Context, in *ReqSheetUpdate, opts ...client.CallOption) (*ReplySheetInfo, error)
 	UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	UpdateKeys(ctx context.Context, in *ReqSheetKeys, opts ...client.CallOption) (*ReplySheetKeys, error)
-	AppendKey(ctx context.Context, in *ReqSheetContent, opts ...client.CallOption) (*ReplySheetKeys, error)
-	SubtractKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplySheetKeys, error)
+	UpdateContents(ctx context.Context, in *ReqSheetContents, opts ...client.CallOption) (*ReplySheetContent, error)
+	AppendContent(ctx context.Context, in *ReqSheetContent, opts ...client.CallOption) (*ReplySheetContent, error)
+	SubtractContent(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplySheetContent, error)
 }
 
 type sheetService struct {
@@ -139,9 +139,9 @@ func (c *sheetService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...c
 	return out, nil
 }
 
-func (c *sheetService) UpdateKeys(ctx context.Context, in *ReqSheetKeys, opts ...client.CallOption) (*ReplySheetKeys, error) {
-	req := c.c.NewRequest(c.name, "SheetService.UpdateKeys", in)
-	out := new(ReplySheetKeys)
+func (c *sheetService) UpdateContents(ctx context.Context, in *ReqSheetContents, opts ...client.CallOption) (*ReplySheetContent, error) {
+	req := c.c.NewRequest(c.name, "SheetService.UpdateContents", in)
+	out := new(ReplySheetContent)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -149,9 +149,9 @@ func (c *sheetService) UpdateKeys(ctx context.Context, in *ReqSheetKeys, opts ..
 	return out, nil
 }
 
-func (c *sheetService) AppendKey(ctx context.Context, in *ReqSheetContent, opts ...client.CallOption) (*ReplySheetKeys, error) {
-	req := c.c.NewRequest(c.name, "SheetService.AppendKey", in)
-	out := new(ReplySheetKeys)
+func (c *sheetService) AppendContent(ctx context.Context, in *ReqSheetContent, opts ...client.CallOption) (*ReplySheetContent, error) {
+	req := c.c.NewRequest(c.name, "SheetService.AppendContent", in)
+	out := new(ReplySheetContent)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -159,9 +159,9 @@ func (c *sheetService) AppendKey(ctx context.Context, in *ReqSheetContent, opts 
 	return out, nil
 }
 
-func (c *sheetService) SubtractKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplySheetKeys, error) {
-	req := c.c.NewRequest(c.name, "SheetService.SubtractKey", in)
-	out := new(ReplySheetKeys)
+func (c *sheetService) SubtractContent(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplySheetContent, error) {
+	req := c.c.NewRequest(c.name, "SheetService.SubtractContent", in)
+	out := new(ReplySheetContent)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -180,9 +180,9 @@ type SheetServiceHandler interface {
 	UpdateBase(context.Context, *ReqSheetUpdate, *ReplySheetInfo) error
 	UpdateStatus(context.Context, *RequestState, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	UpdateKeys(context.Context, *ReqSheetKeys, *ReplySheetKeys) error
-	AppendKey(context.Context, *ReqSheetContent, *ReplySheetKeys) error
-	SubtractKey(context.Context, *RequestInfo, *ReplySheetKeys) error
+	UpdateContents(context.Context, *ReqSheetContents, *ReplySheetContent) error
+	AppendContent(context.Context, *ReqSheetContent, *ReplySheetContent) error
+	SubtractContent(context.Context, *RequestInfo, *ReplySheetContent) error
 }
 
 func RegisterSheetServiceHandler(s server.Server, hdlr SheetServiceHandler, opts ...server.HandlerOption) error {
@@ -195,9 +195,9 @@ func RegisterSheetServiceHandler(s server.Server, hdlr SheetServiceHandler, opts
 		UpdateBase(ctx context.Context, in *ReqSheetUpdate, out *ReplySheetInfo) error
 		UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		UpdateKeys(ctx context.Context, in *ReqSheetKeys, out *ReplySheetKeys) error
-		AppendKey(ctx context.Context, in *ReqSheetContent, out *ReplySheetKeys) error
-		SubtractKey(ctx context.Context, in *RequestInfo, out *ReplySheetKeys) error
+		UpdateContents(ctx context.Context, in *ReqSheetContents, out *ReplySheetContent) error
+		AppendContent(ctx context.Context, in *ReqSheetContent, out *ReplySheetContent) error
+		SubtractContent(ctx context.Context, in *RequestInfo, out *ReplySheetContent) error
 	}
 	type SheetService struct {
 		sheetService
@@ -242,14 +242,14 @@ func (h *sheetServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, ou
 	return h.SheetServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *sheetServiceHandler) UpdateKeys(ctx context.Context, in *ReqSheetKeys, out *ReplySheetKeys) error {
-	return h.SheetServiceHandler.UpdateKeys(ctx, in, out)
+func (h *sheetServiceHandler) UpdateContents(ctx context.Context, in *ReqSheetContents, out *ReplySheetContent) error {
+	return h.SheetServiceHandler.UpdateContents(ctx, in, out)
 }
 
-func (h *sheetServiceHandler) AppendKey(ctx context.Context, in *ReqSheetContent, out *ReplySheetKeys) error {
-	return h.SheetServiceHandler.AppendKey(ctx, in, out)
+func (h *sheetServiceHandler) AppendContent(ctx context.Context, in *ReqSheetContent, out *ReplySheetContent) error {
+	return h.SheetServiceHandler.AppendContent(ctx, in, out)
 }
 
-func (h *sheetServiceHandler) SubtractKey(ctx context.Context, in *RequestInfo, out *ReplySheetKeys) error {
-	return h.SheetServiceHandler.SubtractKey(ctx, in, out)
+func (h *sheetServiceHandler) SubtractContent(ctx context.Context, in *RequestInfo, out *ReplySheetContent) error {
+	return h.SheetServiceHandler.SubtractContent(ctx, in, out)
 }

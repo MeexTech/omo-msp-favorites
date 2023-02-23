@@ -21,10 +21,10 @@ service DisplayService {
     rpc UpdateKeys(ReqDisplayKeys) returns (ReplyDisplayKeys) {}
     rpc AppendKey(RequestInfo) returns (ReplyDisplayKeys){}
     rpc SubtractKey(RequestInfo) returns (ReplyDisplayKeys){}
-    rpc UpdateTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
-    rpc AppendTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
-    rpc SubtractTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
-    rpc UpdateTargets(ReqDisplayTargets) returns (ReplyInfo){}
+//    rpc UpdateTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
+//    rpc AppendTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
+//    rpc SubtractTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
+//    rpc UpdateTargets(ReqDisplayTargets) returns (ReplyInfo){}
 }
 
 message DisplayInfo {
@@ -42,18 +42,20 @@ message DisplayInfo {
     uint32 type = 12;
     string meta = 13;
     uint32 status = 14;
+    string banner = 15;
+    string poster = 16;
     repeated string tags = 30;
     repeated string keys = 31;
-    repeated ShowInfo targets = 32;
+    //repeated ShowInfo targets = 32;
 }
 
-message ShowInfo {
-     string target = 1;
-     string effect = 2;
-     string skin = 3;
-     string menu = 4;
-     repeated string slots = 20;
-}
+//message ShowInfo {
+//     string target = 1;
+//     string effect = 2;
+//     string skin = 3;
+//     string menu = 4;
+//     repeated string slots = 20;
+//}
 
 message ReqDisplayAdd {
     string name = 1;
@@ -127,12 +129,12 @@ message ReqDisplayKeys {
     repeated string keys = 20;
 }
 
-message ReqDisplayTargets {
-    string operator = 1;
-    string owner = 2;
-    repeated string list = 20;
-    repeated string targets = 21;
-}
+//message ReqDisplayTargets {
+//    string operator = 1;
+//    string owner = 2;
+//    repeated string list = 20;
+//    repeated string targets = 21;
+//}
 
 message ReplyDisplayKeys {
     string uid = 1;
@@ -140,8 +142,8 @@ message ReplyDisplayKeys {
     repeated string keys = 20;
 }
 
-message ReplyDisplayTargets {
-    string uid = 1;
-    ReplyStatus status = 2;
-    repeated ShowInfo targets = 20;
-}
+//message ReplyDisplayTargets {
+//    string uid = 1;
+//    ReplyStatus status = 2;
+//    repeated ShowInfo targets = 20;
+//}
