@@ -18,9 +18,9 @@ service DisplayService {
     rpc UpdateTags(ReqDisplayTags) returns (ReplyDisplayInfo) {}
     rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-    rpc UpdateKeys(ReqDisplayKeys) returns (ReplyDisplayKeys) {}
-    rpc AppendKey(RequestInfo) returns (ReplyDisplayKeys){}
-    rpc SubtractKey(RequestInfo) returns (ReplyDisplayKeys){}
+    rpc UpdateContents(ReqDisplayContents) returns (ReplyDisplayContents) {}
+    rpc AppendContent(RequestInfo) returns (ReplyDisplayContents){}
+    rpc SubtractContent(RequestInfo) returns (ReplyDisplayContents){}
 //    rpc UpdateTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
 //    rpc AppendTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
 //    rpc SubtractTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
@@ -45,8 +45,14 @@ message DisplayInfo {
     string banner = 15;
     string poster = 16;
     repeated string tags = 30;
-    repeated string keys = 31;
+    repeated DisplayContent contents = 31;
     //repeated ShowInfo targets = 32;
+}
+
+message DisplayContent{
+    string uid = 1;
+    repeated string events = 2;
+    repeated string assets = 3;
 }
 
 //message ShowInfo {
@@ -123,27 +129,14 @@ message ReplyDisplayList {
     repeated DisplayInfo list = 20;
 }
 
-message ReqDisplayKeys {
+message ReqDisplayContents {
     string uid = 1;
     string operator = 2;
-    repeated string keys = 20;
+    repeated DisplayContent contents = 20;
 }
 
-//message ReqDisplayTargets {
-//    string operator = 1;
-//    string owner = 2;
-//    repeated string list = 20;
-//    repeated string targets = 21;
-//}
-
-message ReplyDisplayKeys {
+message ReplyDisplayContents {
     string uid = 1;
     ReplyStatus status = 2;
-    repeated string keys = 20;
+    repeated DisplayContent contents = 20;
 }
-
-//message ReplyDisplayTargets {
-//    string uid = 1;
-//    ReplyStatus status = 2;
-//    repeated ShowInfo targets = 20;
-//}

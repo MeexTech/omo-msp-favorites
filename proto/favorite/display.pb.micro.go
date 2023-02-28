@@ -47,9 +47,9 @@ type DisplayService interface {
 	UpdateTags(ctx context.Context, in *ReqDisplayTags, opts ...client.CallOption) (*ReplyDisplayInfo, error)
 	UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	UpdateKeys(ctx context.Context, in *ReqDisplayKeys, opts ...client.CallOption) (*ReplyDisplayKeys, error)
-	AppendKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyDisplayKeys, error)
-	SubtractKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyDisplayKeys, error)
+	UpdateContents(ctx context.Context, in *ReqDisplayContents, opts ...client.CallOption) (*ReplyDisplayContents, error)
+	AppendContent(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyDisplayContents, error)
+	SubtractContent(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyDisplayContents, error)
 }
 
 type displayService struct {
@@ -194,9 +194,9 @@ func (c *displayService) RemoveOne(ctx context.Context, in *RequestInfo, opts ..
 	return out, nil
 }
 
-func (c *displayService) UpdateKeys(ctx context.Context, in *ReqDisplayKeys, opts ...client.CallOption) (*ReplyDisplayKeys, error) {
-	req := c.c.NewRequest(c.name, "DisplayService.UpdateKeys", in)
-	out := new(ReplyDisplayKeys)
+func (c *displayService) UpdateContents(ctx context.Context, in *ReqDisplayContents, opts ...client.CallOption) (*ReplyDisplayContents, error) {
+	req := c.c.NewRequest(c.name, "DisplayService.UpdateContents", in)
+	out := new(ReplyDisplayContents)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -204,9 +204,9 @@ func (c *displayService) UpdateKeys(ctx context.Context, in *ReqDisplayKeys, opt
 	return out, nil
 }
 
-func (c *displayService) AppendKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyDisplayKeys, error) {
-	req := c.c.NewRequest(c.name, "DisplayService.AppendKey", in)
-	out := new(ReplyDisplayKeys)
+func (c *displayService) AppendContent(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyDisplayContents, error) {
+	req := c.c.NewRequest(c.name, "DisplayService.AppendContent", in)
+	out := new(ReplyDisplayContents)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -214,9 +214,9 @@ func (c *displayService) AppendKey(ctx context.Context, in *RequestInfo, opts ..
 	return out, nil
 }
 
-func (c *displayService) SubtractKey(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyDisplayKeys, error) {
-	req := c.c.NewRequest(c.name, "DisplayService.SubtractKey", in)
-	out := new(ReplyDisplayKeys)
+func (c *displayService) SubtractContent(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyDisplayContents, error) {
+	req := c.c.NewRequest(c.name, "DisplayService.SubtractContent", in)
+	out := new(ReplyDisplayContents)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -240,9 +240,9 @@ type DisplayServiceHandler interface {
 	UpdateTags(context.Context, *ReqDisplayTags, *ReplyDisplayInfo) error
 	UpdateStatus(context.Context, *RequestState, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	UpdateKeys(context.Context, *ReqDisplayKeys, *ReplyDisplayKeys) error
-	AppendKey(context.Context, *RequestInfo, *ReplyDisplayKeys) error
-	SubtractKey(context.Context, *RequestInfo, *ReplyDisplayKeys) error
+	UpdateContents(context.Context, *ReqDisplayContents, *ReplyDisplayContents) error
+	AppendContent(context.Context, *RequestInfo, *ReplyDisplayContents) error
+	SubtractContent(context.Context, *RequestInfo, *ReplyDisplayContents) error
 }
 
 func RegisterDisplayServiceHandler(s server.Server, hdlr DisplayServiceHandler, opts ...server.HandlerOption) error {
@@ -260,9 +260,9 @@ func RegisterDisplayServiceHandler(s server.Server, hdlr DisplayServiceHandler, 
 		UpdateTags(ctx context.Context, in *ReqDisplayTags, out *ReplyDisplayInfo) error
 		UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		UpdateKeys(ctx context.Context, in *ReqDisplayKeys, out *ReplyDisplayKeys) error
-		AppendKey(ctx context.Context, in *RequestInfo, out *ReplyDisplayKeys) error
-		SubtractKey(ctx context.Context, in *RequestInfo, out *ReplyDisplayKeys) error
+		UpdateContents(ctx context.Context, in *ReqDisplayContents, out *ReplyDisplayContents) error
+		AppendContent(ctx context.Context, in *RequestInfo, out *ReplyDisplayContents) error
+		SubtractContent(ctx context.Context, in *RequestInfo, out *ReplyDisplayContents) error
 	}
 	type DisplayService struct {
 		displayService
@@ -327,14 +327,14 @@ func (h *displayServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, 
 	return h.DisplayServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *displayServiceHandler) UpdateKeys(ctx context.Context, in *ReqDisplayKeys, out *ReplyDisplayKeys) error {
-	return h.DisplayServiceHandler.UpdateKeys(ctx, in, out)
+func (h *displayServiceHandler) UpdateContents(ctx context.Context, in *ReqDisplayContents, out *ReplyDisplayContents) error {
+	return h.DisplayServiceHandler.UpdateContents(ctx, in, out)
 }
 
-func (h *displayServiceHandler) AppendKey(ctx context.Context, in *RequestInfo, out *ReplyDisplayKeys) error {
-	return h.DisplayServiceHandler.AppendKey(ctx, in, out)
+func (h *displayServiceHandler) AppendContent(ctx context.Context, in *RequestInfo, out *ReplyDisplayContents) error {
+	return h.DisplayServiceHandler.AppendContent(ctx, in, out)
 }
 
-func (h *displayServiceHandler) SubtractKey(ctx context.Context, in *RequestInfo, out *ReplyDisplayKeys) error {
-	return h.DisplayServiceHandler.SubtractKey(ctx, in, out)
+func (h *displayServiceHandler) SubtractContent(ctx context.Context, in *RequestInfo, out *ReplyDisplayContents) error {
+	return h.DisplayServiceHandler.SubtractContent(ctx, in, out)
 }
