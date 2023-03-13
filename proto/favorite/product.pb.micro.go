@@ -40,6 +40,7 @@ type ProductService interface {
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateBase(ctx context.Context, in *ReqProductUpdate, opts ...client.CallOption) (*ReplyProductInfo, error)
+	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type productService struct {
@@ -114,6 +115,16 @@ func (c *productService) UpdateBase(ctx context.Context, in *ReqProductUpdate, o
 	return out, nil
 }
 
+func (c *productService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ProductService.RemoveOne", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ProductService service
 
 type ProductServiceHandler interface {
@@ -123,6 +134,7 @@ type ProductServiceHandler interface {
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	UpdateBase(context.Context, *ReqProductUpdate, *ReplyProductInfo) error
+	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 }
 
 func RegisterProductServiceHandler(s server.Server, hdlr ProductServiceHandler, opts ...server.HandlerOption) error {
@@ -133,6 +145,7 @@ func RegisterProductServiceHandler(s server.Server, hdlr ProductServiceHandler, 
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		UpdateBase(ctx context.Context, in *ReqProductUpdate, out *ReplyProductInfo) error
+		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 	}
 	type ProductService struct {
 		productService
@@ -167,4 +180,8 @@ func (h *productServiceHandler) UpdateByFilter(ctx context.Context, in *RequestU
 
 func (h *productServiceHandler) UpdateBase(ctx context.Context, in *ReqProductUpdate, out *ReplyProductInfo) error {
 	return h.ProductServiceHandler.UpdateBase(ctx, in, out)
+}
+
+func (h *productServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
+	return h.ProductServiceHandler.RemoveOne(ctx, in, out)
 }

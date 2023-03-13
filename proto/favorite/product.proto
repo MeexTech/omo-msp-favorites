@@ -11,6 +11,7 @@ service ProductService {
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateBase(ReqProductUpdate) returns (ReplyProductInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
 }
 
 message ProductInfo {
