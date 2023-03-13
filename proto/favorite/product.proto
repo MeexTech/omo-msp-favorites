@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package omo.msp.favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service ProductService {
+  rpc AddOne(ReqProductAdd) returns (ReplyProductInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyProductInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyProductList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateBase(ReqProductUpdate) returns (ReplyProductInfo) {}
+}
+
+message ProductInfo {
+  string uid = 1;
+  uint64 id = 2;
+  uint32 type = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  string creator = 6;
+  string operator = 7;
+  string name = 8;
+  string menus = 9;
+  string entry = 10;
+  string key = 11;
+  string templet = 12;
+  string catalogs = 13;
+  uint32 status = 14;
+  string remark = 15;
+  repeated string revises = 31;
+  repeated ProductEffect effects = 32;
+}
+
+message ProductEffect{
+  string pattern = 1;
+  uint32 min = 2;
+  uint32 max = 3;
+}
+
+message ReqProductAdd{
+  string name = 1;
+  string key = 2;
+  string entry = 3;
+  string menus = 4;
+  string operator = 5;
+  uint32 type = 6;
+  string templet = 7;
+  string remark = 8;
+  repeated string revises = 17;
+  repeated ProductEffect effects = 18;
+}
+
+message ReqProductUpdate{
+  string uid = 1;
+  string key = 2;
+  string name = 3;
+  string remark = 4;
+  string operator = 5;
+}
+
+message ReplyProductInfo {
+  ReplyStatus status = 1;
+  ProductInfo info = 2;
+}
+
+message ReplyProductList {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated ProductInfo list = 16;
+}
