@@ -24,12 +24,12 @@ message ProductInfo {
   string operator = 7;
   string name = 8;
   string menus = 9;
-  string entry = 10;
   string key = 11;
   string templet = 12;
   string catalogs = 13;
   uint32 status = 14;
   string remark = 15;
+  repeated string entries = 30;
   repeated string revises = 31;
   repeated ProductEffect effects = 32;
 }
@@ -43,12 +43,13 @@ message ProductEffect{
 message ReqProductAdd{
   string name = 1;
   string key = 2;
-  string entry = 3;
+
   string menus = 4;
   string operator = 5;
   uint32 type = 6;
   string templet = 7;
   string remark = 8;
+  repeated string entries = 16;
   repeated string revises = 17;
   repeated ProductEffect effects = 18;
 }
