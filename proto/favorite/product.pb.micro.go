@@ -41,6 +41,8 @@ type ProductService interface {
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateBase(ctx context.Context, in *ReqProductUpdate, opts ...client.CallOption) (*ReplyProductInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
+	AppendDisplay(ctx context.Context, in *ReqProductDisplay, opts ...client.CallOption) (*ReplyProductDisplays, error)
+	SubtractDisplay(ctx context.Context, in *ReqProductDisplay, opts ...client.CallOption) (*ReplyProductDisplays, error)
 }
 
 type productService struct {
@@ -125,6 +127,26 @@ func (c *productService) RemoveOne(ctx context.Context, in *RequestInfo, opts ..
 	return out, nil
 }
 
+func (c *productService) AppendDisplay(ctx context.Context, in *ReqProductDisplay, opts ...client.CallOption) (*ReplyProductDisplays, error) {
+	req := c.c.NewRequest(c.name, "ProductService.AppendDisplay", in)
+	out := new(ReplyProductDisplays)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productService) SubtractDisplay(ctx context.Context, in *ReqProductDisplay, opts ...client.CallOption) (*ReplyProductDisplays, error) {
+	req := c.c.NewRequest(c.name, "ProductService.SubtractDisplay", in)
+	out := new(ReplyProductDisplays)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ProductService service
 
 type ProductServiceHandler interface {
@@ -135,6 +157,8 @@ type ProductServiceHandler interface {
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	UpdateBase(context.Context, *ReqProductUpdate, *ReplyProductInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
+	AppendDisplay(context.Context, *ReqProductDisplay, *ReplyProductDisplays) error
+	SubtractDisplay(context.Context, *ReqProductDisplay, *ReplyProductDisplays) error
 }
 
 func RegisterProductServiceHandler(s server.Server, hdlr ProductServiceHandler, opts ...server.HandlerOption) error {
@@ -146,6 +170,8 @@ func RegisterProductServiceHandler(s server.Server, hdlr ProductServiceHandler, 
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		UpdateBase(ctx context.Context, in *ReqProductUpdate, out *ReplyProductInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
+		AppendDisplay(ctx context.Context, in *ReqProductDisplay, out *ReplyProductDisplays) error
+		SubtractDisplay(ctx context.Context, in *ReqProductDisplay, out *ReplyProductDisplays) error
 	}
 	type ProductService struct {
 		productService
@@ -184,4 +210,12 @@ func (h *productServiceHandler) UpdateBase(ctx context.Context, in *ReqProductUp
 
 func (h *productServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
 	return h.ProductServiceHandler.RemoveOne(ctx, in, out)
+}
+
+func (h *productServiceHandler) AppendDisplay(ctx context.Context, in *ReqProductDisplay, out *ReplyProductDisplays) error {
+	return h.ProductServiceHandler.AppendDisplay(ctx, in, out)
+}
+
+func (h *productServiceHandler) SubtractDisplay(ctx context.Context, in *ReqProductDisplay, out *ReplyProductDisplays) error {
+	return h.ProductServiceHandler.SubtractDisplay(ctx, in, out)
 }

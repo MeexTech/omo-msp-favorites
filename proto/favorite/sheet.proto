@@ -68,6 +68,7 @@ message ReqSheetContent {
   string effect = 5;
   string menu = 6;
   string align = 7;
+  string instance = 8;
 }
 
 message ReplySheetInfo {

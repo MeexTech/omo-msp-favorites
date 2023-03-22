@@ -12,6 +12,8 @@ service ProductService {
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc UpdateBase(ReqProductUpdate) returns (ReplyProductInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc AppendDisplay(ReqProductDisplay) returns (ReplyProductDisplays){}
+  rpc SubtractDisplay(ReqProductDisplay) returns (ReplyProductDisplays){}
 }
 
 message ProductInfo {
@@ -31,13 +33,20 @@ message ProductInfo {
   string remark = 15;
   repeated string entries = 30;
   repeated string revises = 31;
-  repeated ProductEffect effects = 32;
+  repeated string shows = 32;
+  repeated ProductEffect effects = 41;
+  repeated DisplayShow displays = 42;
 }
 
 message ProductEffect{
   string pattern = 1;
   uint32 min = 2;
   uint32 max = 3;
+}
+
+message DisplayShow {
+  string uid = 1;
+  string effect = 2;
 }
 
 message ReqProductAdd{
@@ -51,7 +60,9 @@ message ReqProductAdd{
   string remark = 8;
   repeated string entries = 16;
   repeated string revises = 17;
-  repeated ProductEffect effects = 18;
+  repeated string shows = 18;
+  repeated ProductEffect effects = 31;
+  repeated DisplayShow displays = 32;
 }
 
 message ReqProductUpdate{
@@ -60,6 +71,13 @@ message ReqProductUpdate{
   string name = 3;
   string remark = 4;
   string operator = 5;
+}
+
+message ReqProductDisplay{
+  string uid = 1;
+  string display = 2;
+  string effect = 3;
+  string operator = 4;
 }
 
 message ReplyProductInfo {
@@ -74,4 +92,9 @@ message ReplyProductList {
   uint32 page = 4;
   uint32 number = 5;
   repeated ProductInfo list = 16;
+}
+
+message ReplyProductDisplays {
+  ReplyStatus status = 1;
+  repeated DisplayShow list = 16;
 }
