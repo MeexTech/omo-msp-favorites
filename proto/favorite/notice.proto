@@ -44,6 +44,9 @@ message ReqNoticeAdd{
   string owner = 4;
   string operator = 5;
   uint32 type = 6;
+  uint32 interval = 7;
+  uint32 showtime = 8;
+  DateInfo date = 9;
   repeated string tags = 17;
   repeated string targets = 18;
 }
@@ -54,6 +57,9 @@ message ReqNoticeUpdate{
   string subtitle = 3;
   string body = 4;
   string operator = 5;
+  uint32 interval = 6;
+  uint32 showtime = 7;
+  DateInfo date = 8;
   repeated string targets = 16;
 }
 
