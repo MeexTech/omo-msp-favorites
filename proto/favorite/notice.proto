@@ -30,6 +30,9 @@ message NoticeInfo {
   string subtitle = 10;
   string owner = 11;
   uint32 status = 12;
+  uint32 interval = 13;
+  uint32 showtime = 14;
+  DateInfo date = 15;
   repeated string targets = 31;
   repeated string tags = 32;
 }
