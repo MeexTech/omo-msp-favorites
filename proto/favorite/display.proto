@@ -44,6 +44,7 @@ message DisplayInfo {
     uint32 status = 14;
     string banner = 15;
     string poster = 16;
+    uint32 access = 17;
     repeated string tags = 30;
     repeated DisplayContent contents = 31;
     //repeated ShowInfo targets = 32;
