@@ -51,6 +51,7 @@ type ActivityService interface {
 	SubtractOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPairList, error)
 	UpdateOpuses(ctx context.Context, in *ReqActivityOpuses, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdatePrize(ctx context.Context, in *ReqActivityPrize, opts ...client.CallOption) (*ReplyInfo, error)
+	GetStrings(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyList, error)
 }
 
 type activityService struct {
@@ -235,6 +236,16 @@ func (c *activityService) UpdatePrize(ctx context.Context, in *ReqActivityPrize,
 	return out, nil
 }
 
+func (c *activityService) GetStrings(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyList, error) {
+	req := c.c.NewRequest(c.name, "ActivityService.GetStrings", in)
+	out := new(ReplyList)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ActivityService service
 
 type ActivityServiceHandler interface {
@@ -255,6 +266,7 @@ type ActivityServiceHandler interface {
 	SubtractOne(context.Context, *RequestInfo, *ReplyPairList) error
 	UpdateOpuses(context.Context, *ReqActivityOpuses, *ReplyInfo) error
 	UpdatePrize(context.Context, *ReqActivityPrize, *ReplyInfo) error
+	GetStrings(context.Context, *RequestFilter, *ReplyList) error
 }
 
 func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler, opts ...server.HandlerOption) error {
@@ -276,6 +288,7 @@ func RegisterActivityServiceHandler(s server.Server, hdlr ActivityServiceHandler
 		SubtractOne(ctx context.Context, in *RequestInfo, out *ReplyPairList) error
 		UpdateOpuses(ctx context.Context, in *ReqActivityOpuses, out *ReplyInfo) error
 		UpdatePrize(ctx context.Context, in *ReqActivityPrize, out *ReplyInfo) error
+		GetStrings(ctx context.Context, in *RequestFilter, out *ReplyList) error
 	}
 	type ActivityService struct {
 		activityService
@@ -354,4 +367,8 @@ func (h *activityServiceHandler) UpdateOpuses(ctx context.Context, in *ReqActivi
 
 func (h *activityServiceHandler) UpdatePrize(ctx context.Context, in *ReqActivityPrize, out *ReplyInfo) error {
 	return h.ActivityServiceHandler.UpdatePrize(ctx, in, out)
+}
+
+func (h *activityServiceHandler) GetStrings(ctx context.Context, in *RequestFilter, out *ReplyList) error {
+	return h.ActivityServiceHandler.GetStrings(ctx, in, out)
 }
