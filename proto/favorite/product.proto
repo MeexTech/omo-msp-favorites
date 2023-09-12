@@ -42,6 +42,7 @@ message ProductEffect{
   string pattern = 1;
   uint32 min = 2;
   uint32 max = 3;
+  uint32 access = 4;
 }
 
 message DisplayShow {
