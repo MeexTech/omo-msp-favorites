@@ -48,6 +48,7 @@ message ActivityInfo {
   string template = 20;
   PrizeInfo prize = 21;
   uint32 access = 22;
+  repeated string quotes = 40;
   repeated string tags = 41;
   repeated string assets = 42;
   repeated string targets = 43;
@@ -100,6 +101,7 @@ message ReqActivityAdd {
   repeated string assets = 31;
   repeated string tags = 32;
   repeated string targets = 33;
+  repeated string quotes = 40;
 }
 
 message ReqActivityUpdate {
