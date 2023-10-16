@@ -48,6 +48,7 @@ message ActivityInfo {
   string template = 20;
   PrizeInfo prize = 21;
   uint32 access = 22;
+  string poster = 23;
   repeated string quotes = 40;
   repeated string tags = 41;
   repeated string assets = 42;

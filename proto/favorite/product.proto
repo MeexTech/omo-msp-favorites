@@ -31,6 +31,7 @@ message ProductInfo {
   string catalogs = 13;
   uint32 status = 14;
   string remark = 15;
+  uint32 limit = 16;
   repeated string entries = 30;
   repeated string revises = 31;
   repeated string shows = 32;
