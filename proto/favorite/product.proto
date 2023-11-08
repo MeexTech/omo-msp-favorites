@@ -37,6 +37,7 @@ message ProductInfo {
   repeated string shows = 32;
   repeated ProductEffect effects = 41;
   repeated DisplayShow displays = 42;
+  repeated RecordInfo records = 43;
 }
 
 message ProductEffect{

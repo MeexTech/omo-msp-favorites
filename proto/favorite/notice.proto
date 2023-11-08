@@ -35,6 +35,7 @@ message NoticeInfo {
   DateInfo date = 15;
   repeated string targets = 31;
   repeated string tags = 32;
+  repeated RecordInfo records = 41;
 }
 
 message ReqNoticeAdd{

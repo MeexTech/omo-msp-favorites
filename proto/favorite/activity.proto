@@ -63,14 +63,6 @@ message PrizeInfo {
   repeated RankInfo ranks = 3;
 }
 
-message RecordInfo{
-  uint32 option = 1;
-  string from = 2;
-  string to = 3;
-  string remark = 4;
-  string operator = 5;
-}
-
 message RankInfo {
   uint32 index = 1;
   string name = 2;

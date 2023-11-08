@@ -47,22 +47,17 @@ message DisplayInfo {
     uint32 access = 17;
     repeated string tags = 30;
     repeated DisplayContent contents = 31;
-    //repeated ShowInfo targets = 32;
+    repeated DisplayContent pending = 32;
+    repeated RecordInfo records = 41;
 }
 
 message DisplayContent{
     string uid = 1;
-    repeated string events = 2;
-    repeated string assets = 3;
+    string submitter = 2;
+    string reviewer = 3;
+    repeated string events = 11;
+    repeated string assets = 12;
 }
-
-//message ShowInfo {
-//     string target = 1;
-//     string effect = 2;
-//     string skin = 3;
-//     string menu = 4;
-//     repeated string slots = 20;
-//}
 
 message ReqDisplayAdd {
     string name = 1;
