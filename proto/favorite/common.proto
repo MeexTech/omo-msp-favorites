@@ -38,6 +38,7 @@ message RequestInfo {
   string owner = 3;
   string operator = 5;
   uint32 type = 6;
+  string remark = 7;
 }
 
 message RequestFilter {
@@ -63,6 +64,7 @@ message RequestState{
   uint32 status = 2;
   string operator = 3;
   string parent = 4;
+  string remark = 5;
 }
 
 message ReplyStatus {

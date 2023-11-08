@@ -21,10 +21,6 @@ service DisplayService {
     rpc UpdateContents(ReqDisplayContents) returns (ReplyDisplayContents) {}
     rpc AppendContent(RequestInfo) returns (ReplyDisplayContents){}
     rpc SubtractContent(RequestInfo) returns (ReplyDisplayContents){}
-//    rpc UpdateTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
-//    rpc AppendTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
-//    rpc SubtractTarget(ReqDisplayTarget) returns (ReplyDisplayTargets){}
-//    rpc UpdateTargets(ReqDisplayTargets) returns (ReplyInfo){}
 }
 
 message DisplayInfo {
