@@ -43,7 +43,8 @@ message DisplayInfo {
     uint32 access = 17;
     repeated string tags = 30;
     repeated DisplayContent contents = 31;
-    repeated DisplayContent pending = 32;
+    repeated DisplayContent appends = 32;
+    repeated DisplayContent subtracts = 33;
     repeated RecordInfo records = 41;
 }
 
