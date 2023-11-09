@@ -43,8 +43,7 @@ message DisplayInfo {
     uint32 access = 17;
     repeated string tags = 30;
     repeated DisplayContent contents = 31;
-    repeated DisplayContent appends = 32;
-    repeated DisplayContent subtracts = 33;
+    repeated DisplayContent pending = 32;
     repeated RecordInfo records = 41;
 }
 
@@ -52,6 +51,7 @@ message DisplayContent{
     string uid = 1;
     string submitter = 2;
     string reviewer = 3;
+    uint32 option = 4;
     repeated string events = 11;
     repeated string assets = 12;
 }
