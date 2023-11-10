@@ -125,6 +125,7 @@ message ReplyDisplayList {
 message ReqDisplayContents {
     string uid = 1;
     string operator = 2;
+    uint32 type = 3;
     repeated DisplayContent contents = 20;
 }
 
