@@ -30,6 +30,7 @@ message RecordInfo{
   string remark = 4;
   string operator = 5;
   string content = 6;
+  int64 stamp = 7;
 }
 
 message RequestInfo {
