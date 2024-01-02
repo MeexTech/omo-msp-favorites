@@ -52,6 +52,7 @@ message DisplayContent{
     string submitter = 2;
     string reviewer = 3;
     uint32 option = 4;
+    string remark = 5;
     repeated string events = 11;
     repeated string assets = 12;
 }
