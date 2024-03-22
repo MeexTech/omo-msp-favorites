@@ -49,12 +49,18 @@ message ActivityInfo {
   PrizeInfo prize = 21;
   uint32 access = 22;
   string poster = 23;
+  CertifyInfo certify = 24;
   repeated string quotes = 40;
   repeated string tags = 41;
   repeated string assets = 42;
   repeated string targets = 43;
   repeated OpusInfo opuses = 44;
   repeated RecordInfo records = 45;
+}
+
+message CertifyInfo{
+  string style = 1;
+  uint32 limit = 2;
 }
 
 message PrizeInfo {
@@ -91,6 +97,7 @@ message ReqActivityAdd {
   string template = 13;
   PrizeInfo prize = 14;
   uint32 status = 15;
+  CertifyInfo certify = 16;
   repeated string assets = 31;
   repeated string tags = 32;
   repeated string targets = 33;
@@ -108,6 +115,7 @@ message ReqActivityUpdate {
   string organizer = 8;
   string require = 9;
   uint32 limit = 10;
+  CertifyInfo certify = 11;
   repeated string tags = 21;
   repeated string targets = 22;
   repeated string assets = 23;
