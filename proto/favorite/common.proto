@@ -21,6 +21,7 @@ message PairInfo{
 message PlaceInfo{
   string name = 1;
   string location = 2;
+  string asset = 3;
 }
 
 message RecordInfo{
