@@ -29,8 +29,8 @@ message WordsInfo {
   string quote = 15;
   string device = 16;
   uint32 count = 17;
-  uint32 status = 18;
-  string remark = 19;
+  string remark = 18;
+  repeated uint32 states = 30;
   repeated string assets = 31;
 }
 
