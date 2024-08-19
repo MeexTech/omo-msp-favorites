@@ -57,6 +57,7 @@ message ActivityInfo {
   repeated string targets = 43;
   repeated OpusInfo opuses = 44;
   repeated RecordInfo records = 45;
+  repeated PairInfo admins = 46;
 }
 
 message CertifyInfo{
@@ -105,6 +106,7 @@ message ReqActivityAdd {
   repeated string tags = 32;
   repeated string targets = 33;
   repeated string quotes = 40;
+  repeated PairInfo admins = 41;
 }
 
 message ReqActivityUpdate {
@@ -123,6 +125,7 @@ message ReqActivityUpdate {
   repeated string tags = 21;
   repeated string targets = 22;
   repeated string assets = 23;
+  repeated PairInfo admins = 30;
 }
 
 message ReqActivityPrize {
