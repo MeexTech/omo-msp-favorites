@@ -44,7 +44,7 @@ message ReqProductTemplateAdd{
   string key = 2;
   string env = 4;
   string operator = 5;
-  uint32 remark = 6;
+  string remark = 6;
   string frame = 7;
   string asset = 8;
   uint32 fps = 10;
@@ -76,6 +76,7 @@ message ReqProductTemplateGraph {
   uint32 designWidth = 6;
   uint32 designHeight = 7;
   uint32 weight = 8;
+  string operator = 9;
 }
 
 message ReplyProductTemplateInfo {
