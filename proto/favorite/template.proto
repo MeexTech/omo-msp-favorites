@@ -19,13 +19,12 @@ service ProductTemplateService {
 message ProductTemplateInfo {
   string uid = 1;
   uint64 id = 2;
-  uint32 type = 3;
-  int64 created = 4;
-  int64 updated = 5;
-  string creator = 6;
-  string operator = 7;
-  string name = 8;
-  string key = 9;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string key = 8;
   uint32 status = 10;
   string remark = 11;
   uint32 quality = 12;
@@ -37,8 +36,7 @@ message ProductTemplateInfo {
   string updateCfg = 21;
   string bootloaderCfg = 22;
   string dependsCfg = 23;
-  repeated string modules = 31;
-  repeated string catalogs = 32;
+  repeated PairInfo modules = 31;
 }
 
 message ReqProductTemplateAdd{
