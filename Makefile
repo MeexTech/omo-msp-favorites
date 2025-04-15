@@ -11,3 +11,4 @@ proto:
 	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/sheet.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/words.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/product.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/favorite/template.proto

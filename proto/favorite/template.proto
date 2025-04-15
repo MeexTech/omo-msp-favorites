@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package omo.msp.favorite;
+option go_package= "proto/favorite";
+import "proto/favorite/common.proto";
+
+service ProductTemplateService {
+  rpc AddOne(ReqProductTemplateAdd) returns (ReplyProductTemplateInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyProductTemplateInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyProductTemplateList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc UpdateBase(ReqProductTemplateUpdate) returns (ReplyInfo) {}
+  rpc UpdateGraph(ReqProductTemplateGraph) returns (ReplyInfo) {}
+  rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+}
+
+message ProductTemplateInfo {
+  string uid = 1;
+  uint64 id = 2;
+  uint32 type = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  string creator = 6;
+  string operator = 7;
+  string name = 8;
+  string key = 9;
+  uint32 status = 10;
+  string remark = 11;
+  uint32 quality = 12;
+  uint32 fps = 13;
+  string resolution = 14;
+  uint32 width = 15;
+  uint32 height = 16;
+  uint32 weight = 17;
+  string updateCfg = 21;
+  string bootloaderCfg = 22;
+  string dependsCfg = 23;
+  repeated string modules = 31;
+  repeated string catalogs = 32;
+}
+
+message ReqProductTemplateAdd{
+  string name = 1;
+  string key = 2;
+  string env = 4;
+  string operator = 5;
+  uint32 remark = 6;
+  string frame = 7;
+  string asset = 8;
+  uint32 fps = 10;
+  uint32 quality = 11;
+  uint32 runWidth = 12;
+  uint32 runHeight = 13;
+  uint32 designWidth = 14;
+  uint32 designHeight = 15;
+  uint32 weight = 16;
+}
+
+message ReqProductTemplateUpdate{
+  string uid = 1;
+  string key = 2;
+  string name = 3;
+  string remark = 4;
+  string operator = 5;
+  string env = 6;
+  string frame = 7;
+  string asset = 8;
+}
+
+message ReqProductTemplateGraph {
+  string uid = 1;
+  uint32 fps = 2;
+  uint32 quality = 3;
+  uint32 runWidth = 4;
+  uint32 runHeight = 5;
+  uint32 designWidth = 6;
+  uint32 designHeight = 7;
+  uint32 weight = 8;
+}
+
+message ReplyProductTemplateInfo {
+  ReplyStatus status = 1;
+  ProductTemplateInfo info = 2;
+}
+
+message ReplyProductTemplateList {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated ProductTemplateInfo list = 16;
+}
+
