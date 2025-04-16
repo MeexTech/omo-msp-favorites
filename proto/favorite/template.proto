@@ -62,6 +62,8 @@ message ReferenceInfo {
   uint32 kind = 1;
   string org = 2;
   string name = 3;
+  string version = 4;
+  string weight = 5;
 }
 
 message ProductGraph {
