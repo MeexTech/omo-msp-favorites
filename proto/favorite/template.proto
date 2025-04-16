@@ -14,6 +14,8 @@ service ProductTemplateService {
   rpc UpdateGraph(ReqProductTemplateGraph) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetReleaseOn(RequestInfo) returns (ReplyProductTemplateResult) {}
+  rpc GetReleaseList(RequestFilter) returns (ReplyProductTemplateResults) {}
 }
 
 message ProductTemplateInfo {
@@ -24,19 +26,52 @@ message ProductTemplateInfo {
   string creator = 5;
   string operator = 6;
   string name = 7;
-  string key = 8;
+  string keywords = 8;
   uint32 status = 10;
   string remark = 11;
-  uint32 quality = 12;
-  uint32 fps = 13;
-  string resolution = 14;
-  uint32 width = 15;
-  uint32 height = 16;
-  uint32 weight = 17;
+  string frame = 12;
+  string asset = 13;
+  string env = 14;
+
+  ProductGraph graph = 19;
+  repeated ReferenceInfo depends = 20;
+  repeated ReferenceInfo bootloader = 21;
+  repeated PairInfo modules = 31;
+}
+
+message ProductTemplateResult {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string keywords = 8;
+  uint32 status = 10;
+  string remark = 11;
+
   string updateCfg = 21;
   string bootloaderCfg = 22;
   string dependsCfg = 23;
+  ProductGraph graph = 30;
   repeated PairInfo modules = 31;
+}
+
+message ReferenceInfo {
+  uint32 kind = 1;
+  string org = 2;
+  string name = 3;
+}
+
+message ProductGraph {
+  uint32 quality = 1;
+  uint32 fps = 2;
+  uint32 runWidth = 3;
+  uint32 runHeight = 4;
+  uint32 designWidth = 5;
+  uint32 designHeight = 6;
+  uint32 weight = 7;
 }
 
 message ReqProductTemplateAdd{
@@ -84,6 +119,11 @@ message ReplyProductTemplateInfo {
   ProductTemplateInfo info = 2;
 }
 
+message ReplyProductTemplateResult {
+  ReplyStatus status = 1;
+  ProductTemplateResult info = 2;
+}
+
 message ReplyProductTemplateList {
   ReplyStatus status = 1;
   uint32 total = 2;
@@ -91,5 +131,14 @@ message ReplyProductTemplateList {
   uint32 page = 4;
   uint32 number = 5;
   repeated ProductTemplateInfo list = 16;
+}
+
+message ReplyProductTemplateResults {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated ProductTemplateResult list = 16;
 }
 

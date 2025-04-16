@@ -43,6 +43,8 @@ type ProductTemplateService interface {
 	UpdateGraph(ctx context.Context, in *ReqProductTemplateGraph, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
+	GetReleaseOn(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyProductTemplateResult, error)
+	GetReleaseList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyProductTemplateResults, error)
 }
 
 type productTemplateService struct {
@@ -147,6 +149,26 @@ func (c *productTemplateService) RemoveOne(ctx context.Context, in *RequestInfo,
 	return out, nil
 }
 
+func (c *productTemplateService) GetReleaseOn(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyProductTemplateResult, error) {
+	req := c.c.NewRequest(c.name, "ProductTemplateService.GetReleaseOn", in)
+	out := new(ReplyProductTemplateResult)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *productTemplateService) GetReleaseList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyProductTemplateResults, error) {
+	req := c.c.NewRequest(c.name, "ProductTemplateService.GetReleaseList", in)
+	out := new(ReplyProductTemplateResults)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ProductTemplateService service
 
 type ProductTemplateServiceHandler interface {
@@ -159,6 +181,8 @@ type ProductTemplateServiceHandler interface {
 	UpdateGraph(context.Context, *ReqProductTemplateGraph, *ReplyInfo) error
 	UpdateStatus(context.Context, *RequestState, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
+	GetReleaseOn(context.Context, *RequestInfo, *ReplyProductTemplateResult) error
+	GetReleaseList(context.Context, *RequestFilter, *ReplyProductTemplateResults) error
 }
 
 func RegisterProductTemplateServiceHandler(s server.Server, hdlr ProductTemplateServiceHandler, opts ...server.HandlerOption) error {
@@ -172,6 +196,8 @@ func RegisterProductTemplateServiceHandler(s server.Server, hdlr ProductTemplate
 		UpdateGraph(ctx context.Context, in *ReqProductTemplateGraph, out *ReplyInfo) error
 		UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
+		GetReleaseOn(ctx context.Context, in *RequestInfo, out *ReplyProductTemplateResult) error
+		GetReleaseList(ctx context.Context, in *RequestFilter, out *ReplyProductTemplateResults) error
 	}
 	type ProductTemplateService struct {
 		productTemplateService
@@ -218,4 +244,12 @@ func (h *productTemplateServiceHandler) UpdateStatus(ctx context.Context, in *Re
 
 func (h *productTemplateServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
 	return h.ProductTemplateServiceHandler.RemoveOne(ctx, in, out)
+}
+
+func (h *productTemplateServiceHandler) GetReleaseOn(ctx context.Context, in *RequestInfo, out *ReplyProductTemplateResult) error {
+	return h.ProductTemplateServiceHandler.GetReleaseOn(ctx, in, out)
+}
+
+func (h *productTemplateServiceHandler) GetReleaseList(ctx context.Context, in *RequestFilter, out *ReplyProductTemplateResults) error {
+	return h.ProductTemplateServiceHandler.GetReleaseList(ctx, in, out)
 }
