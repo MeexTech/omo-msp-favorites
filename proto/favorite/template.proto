@@ -6,6 +6,7 @@ import "proto/favorite/common.proto";
 
 service ProductTemplateService {
   rpc AddOne(ReqProductTemplateAdd) returns (ReplyProductTemplateInfo) {}
+  rpc Import(RequestInfo) returns (ReplyProductTemplateInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyProductTemplateInfo) {}
   rpc GetByFilter(RequestFilter) returns (ReplyProductTemplateList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
@@ -13,6 +14,7 @@ service ProductTemplateService {
   rpc UpdateBase(ReqProductTemplateUpdate) returns (ReplyInfo) {}
   rpc UpdateGraph(ReqProductTemplateGraph) returns (ReplyInfo) {}
   rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
+  rpc UpdateReferences(ReqProductTemplateReference) returns (ReplyProductTemplateRefs) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc GetReleaseOn(RequestInfo) returns (ReplyProductTemplateResult) {}
   rpc GetReleaseList(RequestFilter) returns (ReplyProductTemplateResults) {}
@@ -114,6 +116,19 @@ message ReqProductTemplateGraph {
   uint32 designHeight = 7;
   uint32 weight = 8;
   string operator = 9;
+}
+
+message ReqProductTemplateReference {
+  string uid = 1;
+  string key = 2;
+  string operator = 3;
+  string value = 4;
+  repeated ReferenceInfo list = 10;
+}
+
+message ReplyProductTemplateRefs {
+  ReplyStatus status = 1;
+  repeated ReferenceInfo list = 2;
 }
 
 message ReplyProductTemplateInfo {
