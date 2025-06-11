@@ -51,6 +51,8 @@ message ActivityInfo {
   string poster = 23;
   CertifyInfo certify = 24;
   PairInfo way = 25;
+  uint32 scope = 26;
+
   repeated string quotes = 40;
   repeated string tags = 41;
   repeated string assets = 42;
@@ -102,6 +104,7 @@ message ReqActivityAdd {
   uint32 status = 15;
   CertifyInfo certify = 16;
   PairInfo way = 17;
+  uint32 scope = 18;
   repeated string assets = 31;
   repeated string tags = 32;
   repeated string targets = 33;
@@ -122,6 +125,7 @@ message ReqActivityUpdate {
   uint32 limit = 10;
   CertifyInfo certify = 11;
   PairInfo way = 12;
+  uint32 scope = 13;
   repeated string tags = 21;
   repeated string targets = 22;
   repeated string assets = 23;
