@@ -59,6 +59,7 @@ message RequestUpdate {
   string value = 4;
   string operator = 5;
   repeated string list = 20;
+  repeated PairInfo array = 21;
 }
 
 message RequestState{
@@ -84,6 +85,7 @@ message RequestList{
   string uid = 1;
   string operator = 2;
   repeated string list = 21;
+  repeated PairInfo array = 22;
 }
 
 message ReplyList{
