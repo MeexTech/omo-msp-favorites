@@ -16,6 +16,7 @@ message DateInfo {
 message PairInfo{
   string key = 1;
   string value = 2;
+  uint32 type = 3;
 }
 
 message PlaceInfo{
