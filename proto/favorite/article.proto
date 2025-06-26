@@ -47,6 +47,7 @@ message ReqArticleAdd{
   string operator = 5;
   string author = 6;
   uint32 type = 7;
+  string cover = 8;
   repeated string tags = 21;
   repeated string assets = 22;
   repeated string targets = 23;
@@ -60,6 +61,7 @@ message ReqArticleUpdate{
   string body = 4;
   string operator = 5;
   string author = 6;
+  string cover = 7;
   repeated string tags = 20;
   repeated string targets = 21;
   repeated PairInfo medias = 26;
