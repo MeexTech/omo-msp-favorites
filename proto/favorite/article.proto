@@ -32,6 +32,7 @@ message ArticleInfo {
   string owner = 11;
   uint32 status = 12;
   string author = 13;
+  string cover = 14;
   repeated string targets = 31;
   repeated string assets = 32;
   repeated string tags = 33;
