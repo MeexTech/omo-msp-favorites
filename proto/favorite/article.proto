@@ -33,6 +33,7 @@ message ArticleInfo {
   uint32 status = 12;
   string author = 13;
   string cover = 14;
+  string link = 15;
   repeated string targets = 31;
   repeated string assets = 32;
   repeated string tags = 33;
@@ -48,6 +49,7 @@ message ReqArticleAdd{
   string author = 6;
   uint32 type = 7;
   string cover = 8;
+  string link = 9;
   repeated string tags = 21;
   repeated string assets = 22;
   repeated string targets = 23;
@@ -62,6 +64,7 @@ message ReqArticleUpdate{
   string operator = 5;
   string author = 6;
   string cover = 7;
+  string link = 8;
   repeated string tags = 20;
   repeated string targets = 21;
   repeated PairInfo medias = 26;
