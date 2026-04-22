@@ -45,7 +45,7 @@ type ProductTemplateService interface {
 	UpdateStatus(ctx context.Context, in *RequestState, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateReferences(ctx context.Context, in *ReqProductTemplateReference, opts ...client.CallOption) (*ReplyProductTemplateRefs, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	GetReleaseOn(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyProductTemplateResult, error)
+	GetReleaseOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyProductTemplateResult, error)
 	GetReleaseList(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyProductTemplateResults, error)
 }
 
@@ -171,8 +171,8 @@ func (c *productTemplateService) RemoveOne(ctx context.Context, in *RequestInfo,
 	return out, nil
 }
 
-func (c *productTemplateService) GetReleaseOn(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyProductTemplateResult, error) {
-	req := c.c.NewRequest(c.name, "ProductTemplateService.GetReleaseOn", in)
+func (c *productTemplateService) GetReleaseOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyProductTemplateResult, error) {
+	req := c.c.NewRequest(c.name, "ProductTemplateService.GetReleaseOne", in)
 	out := new(ReplyProductTemplateResult)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -205,7 +205,7 @@ type ProductTemplateServiceHandler interface {
 	UpdateStatus(context.Context, *RequestState, *ReplyInfo) error
 	UpdateReferences(context.Context, *ReqProductTemplateReference, *ReplyProductTemplateRefs) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	GetReleaseOn(context.Context, *RequestInfo, *ReplyProductTemplateResult) error
+	GetReleaseOne(context.Context, *RequestInfo, *ReplyProductTemplateResult) error
 	GetReleaseList(context.Context, *RequestFilter, *ReplyProductTemplateResults) error
 }
 
@@ -222,7 +222,7 @@ func RegisterProductTemplateServiceHandler(s server.Server, hdlr ProductTemplate
 		UpdateStatus(ctx context.Context, in *RequestState, out *ReplyInfo) error
 		UpdateReferences(ctx context.Context, in *ReqProductTemplateReference, out *ReplyProductTemplateRefs) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		GetReleaseOn(ctx context.Context, in *RequestInfo, out *ReplyProductTemplateResult) error
+		GetReleaseOne(ctx context.Context, in *RequestInfo, out *ReplyProductTemplateResult) error
 		GetReleaseList(ctx context.Context, in *RequestFilter, out *ReplyProductTemplateResults) error
 	}
 	type ProductTemplateService struct {
@@ -280,8 +280,8 @@ func (h *productTemplateServiceHandler) RemoveOne(ctx context.Context, in *Reque
 	return h.ProductTemplateServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *productTemplateServiceHandler) GetReleaseOn(ctx context.Context, in *RequestInfo, out *ReplyProductTemplateResult) error {
-	return h.ProductTemplateServiceHandler.GetReleaseOn(ctx, in, out)
+func (h *productTemplateServiceHandler) GetReleaseOne(ctx context.Context, in *RequestInfo, out *ReplyProductTemplateResult) error {
+	return h.ProductTemplateServiceHandler.GetReleaseOne(ctx, in, out)
 }
 
 func (h *productTemplateServiceHandler) GetReleaseList(ctx context.Context, in *RequestFilter, out *ReplyProductTemplateResults) error {
