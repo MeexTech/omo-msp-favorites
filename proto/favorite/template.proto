@@ -16,7 +16,7 @@ service ProductTemplateService {
   rpc UpdateStatus(RequestState) returns (ReplyInfo) {}
   rpc UpdateReferences(ReqProductTemplateReference) returns (ReplyProductTemplateRefs) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-  rpc GetReleaseOn(RequestInfo) returns (ReplyProductTemplateResult) {}
+  rpc GetReleaseOne(RequestInfo) returns (ReplyProductTemplateResult) {}
   rpc GetReleaseList(RequestFilter) returns (ReplyProductTemplateResults) {}
 }
 
@@ -34,6 +34,7 @@ message ProductTemplateInfo {
   string frame = 12;
   string asset = 13;
   string env = 14;
+  string version = 15;
 
   ProductGraph graph = 19;
   repeated ReferenceInfo depends = 20;
